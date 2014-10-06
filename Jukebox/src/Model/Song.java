@@ -13,7 +13,7 @@ public class Song {
 	private String genre;
 	private int playsToday;
 	
-	private final static int MAX_PLAYS = 5;
+	private final int MAX_PLAYS = 5;
 	
 	private List<GregorianCalendar> songPlays;
 	
@@ -43,7 +43,7 @@ public class Song {
 	}
 	
 	public boolean canBePlayedAgainToday(){
-		return playsToday > MAX_PLAYS;
+		return playsToday < MAX_PLAYS;
 	}
 	
 	public void incresePlayCount(){
@@ -57,8 +57,9 @@ public class Song {
 	}
 
 	public void play() {
-	    if(playsToday <= MAX_PLAYS)
+	    if(playsToday >= MAX_PLAYS) {
 	      return;
+	    }
 	    GregorianCalendar today = new GregorianCalendar();
 	    if (songPlays.size() < MAX_PLAYS) {
 	    	songPlays.add(today);
@@ -66,9 +67,9 @@ public class Song {
 	    } else {
 	      GregorianCalendar last1 = songPlays.get(songPlays.size() - 1);
 	      GregorianCalendar last2 = songPlays.get(songPlays.size() - 2);
-	      if (sameDay(last1, today) && sameDay(last2, today))
+	      if (sameDay(last1, today) && sameDay(last2, today)) {
 	        return;
-	      else {
+	    }  else {
 	    	  songPlays.add(today);
 	    	  playsToday++;
 	      }
