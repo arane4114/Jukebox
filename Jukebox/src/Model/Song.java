@@ -63,7 +63,7 @@ public class Song {
 		GregorianCalendar today = new GregorianCalendar();
 		if (songPlays.size() < MAX_PLAYS) {
 			songPlays.add(today);
-			playsToday++;
+			incresePlayCount();
 		} else {
 			GregorianCalendar last1 = songPlays.get(songPlays.size() - 1);
 			GregorianCalendar last2 = songPlays.get(songPlays.size() - 2);
@@ -75,7 +75,7 @@ public class Song {
 				return;
 			} else {
 				songPlays.add(today);
-				playsToday++;
+				incresePlayCount();
 			}
 		}
 	}
