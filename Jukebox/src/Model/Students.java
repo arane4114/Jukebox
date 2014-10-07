@@ -24,7 +24,7 @@ public class Students {
 		return false;
 	}
 	
-	public Student search(int numberID){
+	public Student getStudent(int numberID){
 		for(Student student : students){
 			if(student.getNumberID() == numberID){
 				return student;

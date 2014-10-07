@@ -5,7 +5,9 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import Model.Song;
+import Model.Songs;
 import Model.Student;
+import Model.Students;
 
 public class JuxeboxTests {
 
@@ -125,5 +127,48 @@ public class JuxeboxTests {
 		
 		assertEquals("BRYCE", s.getName());
 		assertEquals(123, s.getNumberID());
+	}
+	
+	@Test
+	public void testOneStudents() {
+		Student a = new Student("BRYCE" , 123);
+		Student b = new Student("BRYCE" , 321);
+		Student c = new Student("ALEX" , 456);
+		Student d = new Student("Bob", 654);
+		
+		Students abcd = new Students();
+		
+		abcd.addStudent(a);
+		abcd.addStudent(b);
+		abcd.addStudent(c);
+		abcd.addStudent(d);
+	
+		assertTrue(abcd.contains(123));
+		assertTrue(abcd.contains(321));
+		assertTrue(abcd.contains(456));
+		assertTrue(abcd.contains(654));
+		assertFalse(abcd.contains(1234));
+		
+		assertEquals(a, abcd.getStudent(123));
+		assertEquals(b, abcd.getStudent(321));
+		assertEquals(c, abcd.getStudent(456));
+		assertEquals(d, abcd.getStudent(654));
+		assertEquals(null, abcd.getStudent(1243));
+	}
+	
+	@Test
+	public void testOneSongs() {
+		Song a = new Song("a" , "a" ,"a" , 1);
+		Song b = new Song("b" , "b" ,"b" , 2);
+		Song c = new Song("c" , "c" ,"c" , 3);
+		Song d = new Song("d" , "d" ,"d" , 4);
+		
+		Songs abcd = new Songs();
+		
+		abcd.addSong(a);
+		abcd.addSong(b);
+		abcd.addSong(c);
+		abcd.addSong(d);
+		
 	}
 }
