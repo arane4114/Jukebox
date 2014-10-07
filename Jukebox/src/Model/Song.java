@@ -85,13 +85,9 @@ public class Song {
 	}
 
 	public void pretendTheDateHasChanged() {
-		if (songPlays.size() < MAX_PLAYS)
-			return;
-		songPlays.get(songPlays.size() - 1).add(Calendar.DATE, -1);
-		songPlays.get(songPlays.size() - 2).add(Calendar.DATE, -1);
-		songPlays.get(songPlays.size() - 3).add(Calendar.DATE, -1);
-		songPlays.get(songPlays.size() - 4).add(Calendar.DATE, -1);
-		songPlays.get(songPlays.size() - 5).add(Calendar.DATE, -1);
+		for(int i = 1; i < songPlays.size(); i ++){
+			songPlays.get(songPlays.size() - i).add(Calendar.DATE, -1);
+		}
 		playsToday = 0;
 	}
 }

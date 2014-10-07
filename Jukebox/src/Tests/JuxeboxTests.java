@@ -65,6 +65,28 @@ public class JuxeboxTests {
 		assertEquals("X1", r.getFileLocation());
 		assertEquals("X2", r.getTitle());
 		assertEquals("X3", r.getArtist());
+		
+		Song z = new Song("X1" , "X2" ,"X3" , 299);
+		
+		assertTrue(z.canBePlayedAgainToday());
+		z.play();
+		assertTrue(z.canBePlayedAgainToday());
+		z.play();
+		
+		z.pretendTheDateHasChanged();
+		
+		assertTrue(z.canBePlayedAgainToday());
+		z.play();
+		assertTrue(z.canBePlayedAgainToday());
+		z.play();
+		assertTrue(z.canBePlayedAgainToday());
+		z.play();
+		assertTrue(z.canBePlayedAgainToday());
+		z.play();
+		assertTrue(z.canBePlayedAgainToday());
+		z.play();
+		assertFalse(z.canBePlayedAgainToday());	
+
 	}
 	
 	@Test

@@ -80,12 +80,11 @@ public class Student {
 			}
 		}
 	}
-
+	
 	public void pretendTheDateHasChanged() {
-		if (dayPlays.size() < MAX_PLAYS)
-			return;
-		dayPlays.get(dayPlays.size() - 1).add(Calendar.DATE, -1);
-		dayPlays.get(dayPlays.size() - 2).add(Calendar.DATE, -1);
+		for(int i = 1; i < dayPlays.size(); i ++){
+			dayPlays.get(dayPlays.size() - i).add(Calendar.DATE, -1);
+		}
 		playsToday = 0;
 	}
 }
