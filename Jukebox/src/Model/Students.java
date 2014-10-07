@@ -14,4 +14,22 @@ public class Students {
 	public void addStudent(Student student){
 		students.add(student);
 	}
+	
+	public boolean contains(int numberID){
+		for(Student student : students){
+			if(student.getNumberID() == numberID){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public Student search(int numberID){
+		for(Student student : students){
+			if(student.getNumberID() == numberID){
+				return student;
+			}
+		}
+		return null;
+	}
 }
