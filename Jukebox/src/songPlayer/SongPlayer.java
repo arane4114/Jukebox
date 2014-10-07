@@ -1,4 +1,4 @@
-package SongPlayer;
+package songPlayer;
 
 /**
  * SongPlayer has two static methods that allow an audio file to be played

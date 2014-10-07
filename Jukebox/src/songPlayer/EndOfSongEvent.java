@@ -1,4 +1,4 @@
-package SongPlayer;
+package songPlayer;
 
 /**
  * A new one of these objects is passed to the listener to end of song events.

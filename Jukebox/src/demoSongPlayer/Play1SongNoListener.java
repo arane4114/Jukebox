@@ -6,7 +6,7 @@ package demoSongPlayer;
  * 
  * @author Rick Mercer
  */
-import SongPlayer.SongPlayer;
+import songPlayer.SongPlayer;
 
 public class Play1SongNoListener {
 

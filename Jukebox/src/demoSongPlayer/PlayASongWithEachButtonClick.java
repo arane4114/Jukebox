@@ -21,7 +21,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 
-import SongPlayer.SongPlayer;
+import songPlayer.SongPlayer;
 
 public class PlayASongWithEachButtonClick extends JFrame {
   

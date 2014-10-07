@@ -1,13 +1,12 @@
-package Tests;
+package tests;
 
 import static org.junit.Assert.*;
+import model.Song;
+import model.Songs;
+import model.Student;
+import model.Students;
 
 import org.junit.Test;
-
-import Model.Song;
-import Model.Songs;
-import Model.Student;
-import Model.Students;
 
 public class JuxeboxTests {
 

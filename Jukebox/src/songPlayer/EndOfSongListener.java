@@ -1,4 +1,4 @@
-package SongPlayer;
+package songPlayer;
 
 /**
  * This one method interface allows any new type to become 

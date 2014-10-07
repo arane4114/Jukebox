@@ -7,7 +7,7 @@
  * 
  * @author Java Zoom and Jorge Vergara
  */
-package SongPlayer;
+package songPlayer;
 
 import java.awt.EventQueue;
 import java.io.File;

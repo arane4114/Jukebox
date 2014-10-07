@@ -15,9 +15,9 @@ import java.util.GregorianCalendar;
 
 import javax.swing.JOptionPane;
 
-import SongPlayer.EndOfSongEvent;
-import SongPlayer.EndOfSongListener;
-import SongPlayer.SongPlayer;
+import songPlayer.EndOfSongEvent;
+import songPlayer.EndOfSongListener;
+import songPlayer.SongPlayer;
 
 public class Play3SongsWithAListener {
 
