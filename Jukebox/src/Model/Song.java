@@ -48,6 +48,10 @@ public class Song {
 	public void incresePlayCount() {
 		playsToday++;
 	}
+	
+	public int getPlaysToday(){
+		return playsToday;
+	}
 
 	private boolean sameDay(GregorianCalendar today, GregorianCalendar other) {
 		return today.get(Calendar.YEAR) == other.get(Calendar.YEAR)
@@ -81,7 +85,7 @@ public class Song {
 	}
 
 	public void pretendTheDateHasChanged() {
-		if (songPlays.size() < 5)
+		if (songPlays.size() < MAX_PLAYS)
 			return;
 		songPlays.get(songPlays.size() - 1).add(Calendar.DATE, -1);
 		songPlays.get(songPlays.size() - 2).add(Calendar.DATE, -1);

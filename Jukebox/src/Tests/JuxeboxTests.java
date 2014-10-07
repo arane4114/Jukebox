@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import Model.Song;
+import Model.Student;
 
 public class JuxeboxTests {
 
@@ -64,5 +65,43 @@ public class JuxeboxTests {
 		assertEquals("X1", r.getFileLocation());
 		assertEquals("X2", r.getTitle());
 		assertEquals("X3", r.getArtist());
+	}
+	
+	@Test
+	public void testOneStudent() {
+		Student s = new Student("BRYCE" , 123);
+		
+		assertEquals(0, s.getSecondsPlayed());
+		assertEquals(90000, s.getSecondsLeft());
+		assertEquals(0, s.getPlaysToday());
+		
+		assertTrue(s.canPlay());
+		s.play();
+		assertTrue(s.canPlay());
+		s.play();
+		assertFalse(s.canPlay());
+		s.play();
+		assertFalse(s.canPlay());
+		s.play();
+		assertFalse(s.canPlay());
+		s.play();
+		assertFalse(s.canPlay());	
+		
+		s.pretendTheDateHasChanged();
+		
+		assertTrue(s.canPlay());
+		s.play();
+		assertTrue(s.canPlay());
+		s.play();
+		assertFalse(s.canPlay());
+		s.play();
+		assertFalse(s.canPlay());
+		s.play();
+		assertFalse(s.canPlay());
+		s.play();
+		assertFalse(s.canPlay());
+		
+		assertEquals("BRYCE", s.getName());
+		assertEquals(123, s.getNumberID());
 	}
 }
