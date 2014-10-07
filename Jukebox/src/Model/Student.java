@@ -88,15 +88,4 @@ public class Student {
 		dayPlays.get(dayPlays.size() - 2).add(Calendar.DATE, -1);
 		playsToday = 0;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }
