@@ -27,14 +27,6 @@ public class Songs implements ListModel<Song>, TableModel {
 		songs.add(song);
 	}
 
-	private void changed()
-	{
-		for (ListDataListener l: listDataListeners)
-			l.contentsChanged(new ListDataEvent(this, ListDataEvent.CONTENTS_CHANGED, 0, songs.size()));
-		
-		for (TableModelListener l: tableModelListeners)
-			l.tableChanged(new TableModelEvent(this));
-	}
 	
 	@Override
 	public void addTableModelListener(TableModelListener arg0) {
