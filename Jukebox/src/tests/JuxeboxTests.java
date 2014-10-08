@@ -2,8 +2,6 @@ package tests;
 
 import static org.junit.Assert.*;
 
-import java.io.IOException;
-
 import javax.swing.JTable;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;

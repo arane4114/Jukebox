@@ -16,6 +16,10 @@ public class Song {
 
 	private List<GregorianCalendar> songPlays;
 
+	/*
+	 * Song constructor.
+	 * Takes File location , title , artist , songLength
+	 */
 	public Song(String fileLocation, String title, String artist, int songLength) {
 		this.fileLocation = fileLocation;
 		this.title = title;
@@ -25,35 +29,62 @@ public class Song {
 		this.songPlays = new ArrayList<GregorianCalendar>();
 	}
 
+	/*
+	 * Getter for file location.
+	 */
 	public String getFileLocation() {
 		return fileLocation;
 	}
 
+	/*
+	 * Getter for title.
+	 */
 	public String getTitle() {
 		return title;
 	}
 
+	/*
+	 * Getter for artist.
+	 */
 	public String getArtist() {
 		return artist;
 	}
 
+	/*
+	 * Getter for length.
+	 */
 	public int getLength() {
 		return songLength;
 	}
 
+	/*
+	 * Returns true if the song can be played again today.
+	 * Returns false if the song can not be played again today.
+	 */
 	public boolean canBePlayedAgainToday() {
 		dateCheck();
 		return playsToday < MAX_PLAYS;
 	}
 
+	/*
+	 * Add 1 to the playsToday.
+	 */
 	public void incresePlayCount() {
 		playsToday++;
 	}
 
+	/*
+	 * Getter of playsToday.
+	 */
 	public int getPlaysToday() {
 		return playsToday;
 	}
 
+	/*
+	 * Checks if the date has changed since the last time the 
+	 * song was played. If it is a new data set playsToday = 0;
+	 * If it is not a new day do nothing.
+	 */
 	private void dateCheck() {
 		if (playsToday > 0) {
 			GregorianCalendar today = new GregorianCalendar();
@@ -64,6 +95,9 @@ public class Song {
 		}
 	}
 
+	/*
+	 * Returns a true or false if the two days passed in are the same or not.
+	 */
 	private boolean sameDay(GregorianCalendar today, GregorianCalendar other) {
 		return today.get(Calendar.YEAR) == other.get(Calendar.YEAR)
 				&& today.get(Calendar.MONTH) == other.get(Calendar.MONTH)
@@ -71,6 +105,12 @@ public class Song {
 						.get(Calendar.DAY_OF_MONTH);
 	}
 
+	/*
+	 * Tell the song that it has been played.
+	 * Play still check if the song can be played.
+	 * Adds play dates to list.
+	 * Increases playToday.
+	 */
 	public void play() {
 		dateCheck();
 		if (playsToday >= MAX_PLAYS) {
@@ -97,6 +137,9 @@ public class Song {
 		}
 	}
 
+	/*
+	 * Simulates if the date has changed.
+	 */
 	public void pretendTheDateHasChanged() {
 		for (int i = 1; i < songPlays.size(); i++) {
 			songPlays.get(songPlays.size() - i).add(Calendar.DATE, -1);
