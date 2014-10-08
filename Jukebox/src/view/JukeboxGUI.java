@@ -49,6 +49,43 @@ public class JukeboxGUI extends JFrame{
 		songs.addSong(new Song("tada.wav", "Tada", "Tada", 100));
 		songs.addSong(new Song("UntameableFire.mp3", "Untameable Fire", "Untameable Fire", 100));
 
+		// create the JTable from the StudentList
+				table = new JTable(songs);
+				table.setRowSorter(new TableRowSorter<TableModel>(table.getModel())); // needed for sorting
+				
+				// create the JList from the StudentList
+				list = new JList<Song>(songs);
+				
+				// create add/ remove buttons, add listeners
+				play = new JButton("Play");
+				play.addActionListener(new SelectedSong());
+				
+				
+				// left side
+				JPanel center = new JPanel();
+				center.setLayout(new BorderLayout());
+				
+				// add the table to the center of the left side
+				center.add(new JScrollPane(table), BorderLayout.CENTER);
+				
+				// top = centered label
+				JPanel top = new JPanel();
+				top.add(new JLabel("Songs Table")); 
+				
+				// add centered label to top of left side
+				center.add(top, BorderLayout.NORTH);
+				
+				this.add(center);
+//				
+//				JPanel bottom = new JPanel();
+//				
+//				play.add(bottom, BorderLayout.SOUTH);
+//				this.add(play);
+				
+				// frame setup
+				this.setSize(600, 300);
+				this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				this.setVisible(true);
 	}
 	
 	
