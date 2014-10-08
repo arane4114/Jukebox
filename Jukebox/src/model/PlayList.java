@@ -13,10 +13,6 @@ public class PlayList {
 	private boolean isPlaying;
 	private final int TWO_SECONDS = 2000;
 
-	public static String baseDir = System.getProperty("user.dir")
-			+ System.getProperty("file.separator") + "songfiles"
-			+ System.getProperty("file.separator");
-
 	public PlayList() {
 		list = new LinkedList<Song>();
 		isPlaying = false;
@@ -48,8 +44,8 @@ public class PlayList {
 			isPlaying = true;
 			Song currentSong = list.get(0);
 			list.remove(0);
-			SongPlayer.playFile(new EndOfSongListenerObject(), baseDir
-					+ currentSong.getFileLocation());
+			SongPlayer.playFile(new EndOfSongListenerObject(),
+					currentSong.getFileLocation());
 		}
 	}
 
