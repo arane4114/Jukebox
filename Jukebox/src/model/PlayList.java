@@ -24,7 +24,7 @@ public class PlayList {
 	public void addSong(Song song) {
 		list.add(song);
 		System.out.println("Added " + song.getTitle());
-		if(list.size() == 1 && !isPlaying){
+		if(!isPlaying){
 			playNextSong();
 		}
 	}
@@ -39,15 +39,20 @@ public class PlayList {
 			timer.setRepeats(false);
 			timer.start();
 			System.out.println("Waiting for 2 seconds.");
+			
+			this.isPlaying = false;
+			playNextSong();
 		}
 	}
-	
+
 	private void playNextSong(){
-		isPlaying = true;
-		Song currentSong = list.get(0);
-		list.remove(0);
-		System.out.println("Playing " + currentSong.getTitle());
-		SongPlayer.playFile(new EndOfSongListenerObject(), currentSong.getFileLocation());
+		if(!list.isEmpty() && !isPlaying){
+			isPlaying = true;
+			Song currentSong = list.get(0);
+			list.remove(0);
+			System.out.println("Playing " + currentSong.getTitle());
+			SongPlayer.playFile(new EndOfSongListenerObject(), currentSong.getFileLocation());
+		}
 	}
 	
 	private class TimerListener implements ActionListener{
@@ -63,5 +68,4 @@ public class PlayList {
 			songHasEnded();
 		}
 	}
-
 }
