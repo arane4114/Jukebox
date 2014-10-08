@@ -2,6 +2,8 @@ package tests;
 
 import static org.junit.Assert.*;
 
+import java.io.IOException;
+
 import javax.swing.JTable;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
@@ -161,9 +163,9 @@ public class JuxeboxTests {
 		assertEquals(null, abcd.getStudent(1243));
 	}
 
-	@Test
+	@Test 
 	public void testOneSongs() {
-
+			
 		String baseDir = System.getProperty("user.dir")
 				+ System.getProperty("file.separator") + "songfiles"
 				+ System.getProperty("file.separator");
@@ -209,17 +211,21 @@ public class JuxeboxTests {
 	public void testOnePlayList() {
 
 		PlayList playList = new PlayList();
+		
+		String baseDir = System.getProperty("user.dir")
+				+ System.getProperty("file.separator") + "songfiles"
+				+ System.getProperty("file.separator");
 
-		playList.addSong(new Song("BlueRidgeMountainMist.mp3",
+		playList.addSong(new Song(baseDir + "BlueRidgeMountainMist.mp3",
 				"Blue Ridge Mountain Mist", "Ralph Schuckett", 38));
-		playList.addSong(new Song("DeterminedTumbao.mp3", "Determined Tumbao",
+		playList.addSong(new Song(baseDir + "DeterminedTumbao.mp3", "Determined Tumbao",
 				"FreePlay Music", 20));
-		playList.addSong(new Song("flute.aif", "Flute", "Sun Microsystems", 5));
-		playList.addSong(new Song("spacemusic.au", "Spacemusic", "Unknown", 6));
-		playList.addSong(new Song("SwingCheese.mp3", "Swing Cheese",
+		playList.addSong(new Song(baseDir + "flute.aif", "Flute", "Sun Microsystems", 5));
+		playList.addSong(new Song(baseDir + "spacemusic.au", "Spacemusic", "Unknown", 6));
+		playList.addSong(new Song(baseDir + "SwingCheese.mp3", "Swing Cheese",
 				"FreePlay Music", 15));
-		playList.addSong(new Song("tada.wav", "Tada", "Microsoft", 2));
-		playList.addSong(new Song("UntameableFire.mp3", "Untameable Fire",
+		playList.addSong(new Song(baseDir + "tada.wav", "Tada", "Microsoft", 2));
+		playList.addSong(new Song(baseDir + "UntameableFire.mp3", "Untameable Fire",
 				"Pierre Langer", 282));
 	}
 }
