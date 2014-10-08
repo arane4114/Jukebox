@@ -1,12 +1,8 @@
 package model;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.LinkedList;
 import java.util.List;
-
-import javax.swing.Timer;
-
+import java.util.concurrent.TimeUnit;
 import songPlayer.EndOfSongEvent;
 import songPlayer.EndOfSongListener;
 import songPlayer.SongPlayer;
@@ -14,7 +10,7 @@ import songPlayer.SongPlayer;
 public class PlayList {
 	private List<Song> list;
 	private boolean isPlaying;
-	private Timer timer;
+	private final int TWO_SECONDS = 2;
 
 	public PlayList() {
 		list = new LinkedList<Song>();
@@ -35,13 +31,14 @@ public class PlayList {
 			this.isPlaying = false;
 		}
 		else{
-			timer = new Timer(2000, new TimerListener());
-			timer.setRepeats(false);
-			timer.start();
-			System.out.println("Waiting for 2 seconds.");
-			
 			this.isPlaying = false;
-			playNextSong();
+			System.out.println("Waiting for 2 seconds.");
+			try {
+				TimeUnit.SECONDS.sleep(TWO_SECONDS);
+				playNextSong();
+			}catch(InterruptedException e){
+				// Should Never Happen
+			}
 		}
 	}
 
@@ -52,13 +49,6 @@ public class PlayList {
 			list.remove(0);
 			System.out.println("Playing " + currentSong.getTitle());
 			SongPlayer.playFile(new EndOfSongListenerObject(), currentSong.getFileLocation());
-		}
-	}
-	
-	private class TimerListener implements ActionListener{
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			playNextSong();
 		}
 	}
 	
