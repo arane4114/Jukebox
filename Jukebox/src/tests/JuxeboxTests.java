@@ -2,7 +2,6 @@ package tests;
 
 import static org.junit.Assert.*;
 
-import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
@@ -189,7 +188,6 @@ public class JuxeboxTests {
 		assertEquals("Ralph Schuckett", table.getValueAt(0, 0));
 		assertEquals("Blue Ridge Mountain Mist", table.getValueAt(0, 1));
 		assertEquals(38, table.getValueAt(0, 2));
-		//assertEquals(null, table.getValueAt(0, 3));
 		
 		assertEquals(x, songs.getSongAt(0));
 		
@@ -210,8 +208,5 @@ public class JuxeboxTests {
 		playList.addSong(new Song("SwingCheese.mp3", "Swing Cheese", "FreePlay Music", 15));
 		playList.addSong(new Song("tada.wav", "Tada", "Microsoft", 2));
 		playList.addSong(new Song("UntameableFire.mp3", "Untameable Fire", "Pierre Langer", 282));
-
-		
-
 	}
 }
