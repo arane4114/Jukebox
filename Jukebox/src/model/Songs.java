@@ -1,100 +1,127 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.ListModel;
+import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
+import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
-public class Songs implements ListModel<Student>, TableModel {
+public class Songs implements ListModel<Song>, TableModel {
 	
-	private List<Song> songs = new ArrayList<Song>();
+	private ArrayList<Song> songs;
+	private LinkedList<ListDataListener> listDataListeners;
+	private LinkedList<TableModelListener> tableModelListeners;
 	
 	public Songs(){
 		songs = new ArrayList<Song>();
+		listDataListeners = new LinkedList<ListDataListener>();
+		tableModelListeners = new LinkedList<TableModelListener>();
 	}
 
 	public void addSong(Song song){
 		songs.add(song);
 	}
 
+	private void changed()
+	{
+		for (ListDataListener l: listDataListeners)
+			l.contentsChanged(new ListDataEvent(this, ListDataEvent.CONTENTS_CHANGED, 0, songs.size()));
+		
+		for (TableModelListener l: tableModelListeners)
+			l.tableChanged(new TableModelEvent(this));
+	}
+	
 	@Override
 	public void addTableModelListener(TableModelListener arg0) {
-		// TODO Auto-generated method stub
-		
+		tableModelListeners.add(arg0);
 	}
 
 	@Override
-	public Class<?> getColumnClass(int arg0) {
-		// TODO Auto-generated method stub
+	public Class<?> getColumnClass(int columnIndex) {
+		switch(columnIndex)
+		{
+		case 0:	
+		case 1: return String.class; // first two columns are strings
+		case 2:	return Integer.class; // 3rd column is Int
+		}
 		return null;
 	}
 
 	@Override
 	public int getColumnCount() {
-		// TODO Auto-generated method stub
-		return 0;
+		return 3;
 	}
 
 	@Override
-	public String getColumnName(int arg0) {
-		// TODO Auto-generated method stub
-		return null;
+	public String getColumnName(int columnIndex) {
+		switch(columnIndex)
+		{
+		case 0:	return "Artist";
+		case 1: return "Title";
+		case 2:	return "Seconds";
+		}
+		return "error";
 	}
 
 	@Override
 	public int getRowCount() {
-		// TODO Auto-generated method stub
-		return 0;
+		return songs.size();
 	}
 
 	@Override
-	public Object getValueAt(int arg0, int arg1) {
-		// TODO Auto-generated method stub
+	public Object getValueAt(int rowIndex, int columnIndex) {
+		switch(columnIndex)
+		{
+		case 0:	return songs.get(rowIndex).getArtist();
+		case 1: return songs.get(rowIndex).getTitle();
+		case 2:	return songs.get(rowIndex).getLength();
+		}
 		return null;
 	}
 
 	@Override
-	public boolean isCellEditable(int arg0, int arg1) {
-		// TODO Auto-generated method stub
+	public boolean isCellEditable(int rowIndex, int columnIndex) {
 		return false;
 	}
 
 	@Override
 	public void removeTableModelListener(TableModelListener arg0) {
-		// TODO Auto-generated method stub
-		
+		// No Removing
 	}
 
 	@Override
 	public void setValueAt(Object arg0, int arg1, int arg2) {
-		// TODO Auto-generated method stub
-		
+		// No Changing	
 	}
 
 	@Override
 	public void addListDataListener(ListDataListener l) {
-		// TODO Auto-generated method stub
+		listDataListeners.add(l);
 		
 	}
 
 	@Override
-	public Student getElementAt(int index) {
+	public Song getElementAt(int index) {
 		// TODO Auto-generated method stub
-		return null;
+		if (index < 0 || index > songs.size()) // check for valid index
+			return null;
+		
+		return songs.get(index);
 	}
 
 	@Override
 	public int getSize() {
-		// TODO Auto-generated method stub
-		return 0;
+		return songs.size();
 	}
 
 	@Override
 	public void removeListDataListener(ListDataListener l) {
-		// TODO Auto-generated method stub
+		listDataListeners.remove(l);
 		
 	}
 }
