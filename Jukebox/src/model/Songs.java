@@ -75,6 +75,10 @@ public class Songs implements ListModel<Song>, TableModel {
 		}
 		return null;
 	}
+	
+	public Song getSongAt(int rowIndex) {
+		return songs.get(rowIndex);
+	}
 
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {

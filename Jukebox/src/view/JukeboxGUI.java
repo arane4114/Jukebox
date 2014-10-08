@@ -1,7 +1,6 @@
 package view;
 
 import java.awt.BorderLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -17,7 +16,6 @@ import javax.swing.table.TableRowSorter;
 
 import model.Song;
 import model.Songs;
-import model.Student;
 
 public class JukeboxGUI extends JFrame{
 	private Songs songs;
@@ -30,10 +28,12 @@ public class JukeboxGUI extends JFrame{
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			
-			Song selected = list.getSelectedValue();
-			if (selected != null)
+			int selectedRow = table.getSelectedRow();
+			int selectedColumn = table.getSelectedColumn();
+			
+			if (selectedColumn != -1 && selectedRow != -1)
 			{
-				selected.play();
+				 songs.getSongAt(selectedRow).play();
 			}	
 		}
 	}
@@ -53,7 +53,6 @@ public class JukeboxGUI extends JFrame{
 
 				table = new JTable(songs);
 				table.setRowSorter(new TableRowSorter<TableModel>(table.getModel())); // needed for sorting
-				
 				list = new JList<Song>(songs);
 				
 				play = new JButton("Play");
