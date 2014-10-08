@@ -17,7 +17,7 @@ public class Song {
 	private List<GregorianCalendar> songPlays;
 
 	public Song(String fileLocation, String title, String artist, int songLength) {
-		this.fileLocation =  fileLocation;
+		this.fileLocation = fileLocation;
 		this.title = title;
 		this.artist = artist;
 		this.songLength = songLength;
@@ -49,21 +49,21 @@ public class Song {
 	public void incresePlayCount() {
 		playsToday++;
 	}
-	
-	public int getPlaysToday(){
+
+	public int getPlaysToday() {
 		return playsToday;
 	}
 
-	private void dateCheck(){
-		if(playsToday > 0){
+	private void dateCheck() {
+		if (playsToday > 0) {
 			GregorianCalendar today = new GregorianCalendar();
 			GregorianCalendar last1 = songPlays.get(songPlays.size() - 1);
-			if(!sameDay(today , last1)){
+			if (!sameDay(today, last1)) {
 				this.playsToday = 0;
 			}
 		}
 	}
-	
+
 	private boolean sameDay(GregorianCalendar today, GregorianCalendar other) {
 		return today.get(Calendar.YEAR) == other.get(Calendar.YEAR)
 				&& today.get(Calendar.MONTH) == other.get(Calendar.MONTH)
@@ -86,8 +86,9 @@ public class Song {
 			GregorianCalendar last3 = songPlays.get(songPlays.size() - 3);
 			GregorianCalendar last4 = songPlays.get(songPlays.size() - 4);
 			GregorianCalendar last5 = songPlays.get(songPlays.size() - 5);
-			if (sameDay(last1, today) && sameDay(last2, today) && sameDay(last3, today) && 
-					sameDay(last4, today) && sameDay(last5, today)) {
+			if (sameDay(last1, today) && sameDay(last2, today)
+					&& sameDay(last3, today) && sameDay(last4, today)
+					&& sameDay(last5, today)) {
 				return;
 			} else {
 				songPlays.add(today);
@@ -97,7 +98,7 @@ public class Song {
 	}
 
 	public void pretendTheDateHasChanged() {
-		for(int i = 1; i < songPlays.size(); i ++){
+		for (int i = 1; i < songPlays.size(); i++) {
 			songPlays.get(songPlays.size() - i).add(Calendar.DATE, -1);
 		}
 	}

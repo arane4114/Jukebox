@@ -9,22 +9,21 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
 public class Songs implements ListModel<Song>, TableModel {
-	
+
 	private ArrayList<Song> songs;
 	private LinkedList<ListDataListener> listDataListeners;
 	private LinkedList<TableModelListener> tableModelListeners;
-	
-	public Songs(){
+
+	public Songs() {
 		songs = new ArrayList<Song>();
 		listDataListeners = new LinkedList<ListDataListener>();
 		tableModelListeners = new LinkedList<TableModelListener>();
 	}
 
-	public void addSong(Song song){
+	public void addSong(Song song) {
 		songs.add(song);
 	}
 
-	
 	@Override
 	public void addTableModelListener(TableModelListener arg0) {
 		tableModelListeners.add(arg0);
@@ -32,11 +31,12 @@ public class Songs implements ListModel<Song>, TableModel {
 
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
-		switch(columnIndex)
-		{
-		case 0:	
-		case 1: return String.class; // first two columns are strings
-		case 2:	return Integer.class; // 3rd column is Int
+		switch (columnIndex) {
+		case 0:
+		case 1:
+			return String.class; // first two columns are strings
+		case 2:
+			return Integer.class; // 3rd column is Int
 		}
 		return null;
 	}
@@ -48,11 +48,13 @@ public class Songs implements ListModel<Song>, TableModel {
 
 	@Override
 	public String getColumnName(int columnIndex) {
-		switch(columnIndex)
-		{
-		case 0:	return "Artist";
-		case 1: return "Title";
-		case 2:	return "Seconds";
+		switch (columnIndex) {
+		case 0:
+			return "Artist";
+		case 1:
+			return "Title";
+		case 2:
+			return "Seconds";
 		}
 		return "error";
 	}
@@ -64,15 +66,17 @@ public class Songs implements ListModel<Song>, TableModel {
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		switch(columnIndex)
-		{
-		case 0:	return songs.get(rowIndex).getArtist();
-		case 1: return songs.get(rowIndex).getTitle();
-		case 2:	return songs.get(rowIndex).getLength();
+		switch (columnIndex) {
+		case 0:
+			return songs.get(rowIndex).getArtist();
+		case 1:
+			return songs.get(rowIndex).getTitle();
+		case 2:
+			return songs.get(rowIndex).getLength();
 		}
 		return null;
 	}
-	
+
 	public Song getSongAt(int rowIndex) {
 		return songs.get(rowIndex);
 	}
@@ -89,20 +93,20 @@ public class Songs implements ListModel<Song>, TableModel {
 
 	@Override
 	public void setValueAt(Object arg0, int arg1, int arg2) {
-		// No Changing	
+		// No Changing
 	}
 
 	@Override
 	public void addListDataListener(ListDataListener l) {
 		listDataListeners.add(l);
-		
+
 	}
 
 	@Override
 	public Song getElementAt(int index) {
 		if (index < 0 || index > songs.size()) // check for valid index
 			return null;
-		
+
 		return songs.get(index);
 	}
 
@@ -114,6 +118,6 @@ public class Songs implements ListModel<Song>, TableModel {
 	@Override
 	public void removeListDataListener(ListDataListener l) {
 		listDataListeners.remove(l);
-		
+
 	}
 }

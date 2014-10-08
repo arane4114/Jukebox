@@ -12,7 +12,7 @@ public class PlayList {
 	private List<Song> list;
 	private boolean isPlaying;
 	private final int TWO_SECONDS = 2000;
-	
+
 	public static String baseDir = System.getProperty("user.dir")
 			+ System.getProperty("file.separator") + "songfiles"
 			+ System.getProperty("file.separator");
@@ -24,35 +24,35 @@ public class PlayList {
 
 	public void addSong(Song song) {
 		list.add(song);
-		if(!isPlaying){
+		if (!isPlaying) {
 			playNextSong();
 		}
 	}
 
-	private void songHasEnded(){
-		if(list.isEmpty()){
+	private void songHasEnded() {
+		if (list.isEmpty()) {
 			this.isPlaying = false;
-		}
-		else{
+		} else {
 			this.isPlaying = false;
 			try {
 				Thread.sleep(TWO_SECONDS);
 				playNextSong();
-			}catch(InterruptedException e){
+			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
 	}
 
-	private void playNextSong(){
-		if(!list.isEmpty() && !isPlaying){
+	private void playNextSong() {
+		if (!list.isEmpty() && !isPlaying) {
 			isPlaying = true;
 			Song currentSong = list.get(0);
 			list.remove(0);
-			SongPlayer.playFile(new EndOfSongListenerObject(), baseDir + currentSong.getFileLocation());
+			SongPlayer.playFile(new EndOfSongListenerObject(), baseDir
+					+ currentSong.getFileLocation());
 		}
 	}
-	
+
 	private class EndOfSongListenerObject implements EndOfSongListener {
 		public void songFinishedPlaying(EndOfSongEvent eosEvent) {
 			songHasEnded();
