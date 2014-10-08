@@ -50,9 +50,19 @@ public class Student {
 	}
 	
 	public boolean canPlay(){
+		dateCheck();
 		return playsToday < MAX_PLAYS;
 	}
 	
+	private void dateCheck(){
+		if(playsToday > 0){
+			GregorianCalendar today = new GregorianCalendar();
+			GregorianCalendar last1 = dayPlays.get(dayPlays.size() - 1);
+			if(!sameDay(today , last1)){
+				this.playsToday = 0;
+			}
+		}
+	}
 	
 	private boolean sameDay(GregorianCalendar today, GregorianCalendar other) {
 		return today.get(Calendar.YEAR) == other.get(Calendar.YEAR)
@@ -62,6 +72,7 @@ public class Student {
 	}
 
 	public void play() {
+		dateCheck();
 		if (playsToday >= MAX_PLAYS) {
 			return;
 		}
@@ -85,6 +96,5 @@ public class Student {
 		for(int i = 1; i < dayPlays.size(); i ++){
 			dayPlays.get(dayPlays.size() - i).add(Calendar.DATE, -1);
 		}
-		playsToday = 0;
 	}
 }

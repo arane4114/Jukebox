@@ -42,6 +42,7 @@ public class Song {
 	}
 
 	public boolean canBePlayedAgainToday() {
+		dateCheck();
 		return playsToday < MAX_PLAYS;
 	}
 
@@ -53,6 +54,16 @@ public class Song {
 		return playsToday;
 	}
 
+	private void dateCheck(){
+		if(playsToday > 0){
+			GregorianCalendar today = new GregorianCalendar();
+			GregorianCalendar last1 = songPlays.get(songPlays.size() - 1);
+			if(!sameDay(today , last1)){
+				this.playsToday = 0;
+			}
+		}
+	}
+	
 	private boolean sameDay(GregorianCalendar today, GregorianCalendar other) {
 		return today.get(Calendar.YEAR) == other.get(Calendar.YEAR)
 				&& today.get(Calendar.MONTH) == other.get(Calendar.MONTH)
@@ -61,6 +72,7 @@ public class Song {
 	}
 
 	public void play() {
+		dateCheck();
 		if (playsToday >= MAX_PLAYS) {
 			return;
 		}
@@ -88,6 +100,5 @@ public class Song {
 		for(int i = 1; i < songPlays.size(); i ++){
 			songPlays.get(songPlays.size() - i).add(Calendar.DATE, -1);
 		}
-		playsToday = 0;
 	}
 }
