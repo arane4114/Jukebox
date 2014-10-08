@@ -14,6 +14,7 @@ import javax.swing.JTable;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
+import model.Jukebox;
 import model.PlayList;
 import model.Song;
 import model.Songs;
@@ -23,7 +24,7 @@ public class JukeboxGUI extends JFrame{
 	private JTable table;
 	private JList<Song> list;
 	private JButton play;
-	private PlayList playlist;
+	private PlayList playList;
 	
 	private class SelectedSong implements ActionListener
 	{
@@ -35,18 +36,21 @@ public class JukeboxGUI extends JFrame{
 			
 			if (selectedColumn != -1 && selectedRow != -1)
 			{
-				playlist.addSong(songs.getSongAt(selectedRow));
-				songs.getSongAt(selectedRow).play();
+				if(songs.getSongAt(selectedRow).canBePlayedAgainToday()){
+					playList.addSong(songs.getSongAt(selectedRow));
+					songs.getSongAt(selectedRow).play();
+				}
 			}	
 		}
 	}
 	
 	public JukeboxGUI()
 	{
-		playlist = new PlayList();
 		
+		playList = new PlayList();
+
 		songs = new Songs();
-		songs.addSong(new Song("BlueRidgeMoutainMist.mp3", "Blue Ridge Moutain Mist", "Blue Ridge Moutain Mist", 100));
+		songs.addSong(new Song("BlueRidgeMountainMist.mp3", "Blue Ridge Moutain Mist", "Blue Ridge Moutain Mist", 100));
 		songs.addSong(new Song("DeterminedTumbao.mp3", "Determined Tumbao", "Determined Tumbao", 100));
 		songs.addSong(new Song("flute.aif", "Flute", "Flute", 100));
 		songs.addSong(new Song("spacemusic.au", "Spacemusic", "Spacemusic", 100));
