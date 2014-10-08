@@ -1,4 +1,13 @@
-package runnables;
+/*
+ * @ - Author: Abhishek Rane
+ * @ - Author: Bryce Hammond
+ */
+package console;
+
+/*
+ * This class is the start point of the console edition of this app.
+ * It loads ands plays 3 songs using the play list model.
+ */
 
 import model.PlayList;
 import model.Song;
@@ -8,7 +17,11 @@ public class QueueAndPlay3SongsInOrder {
 	public static String baseDir = System.getProperty("user.dir")
 			+ System.getProperty("file.separator") + "songfiles"
 			+ System.getProperty("file.separator");
-
+	
+	/*
+	 * This is the main loop for the console version of the class.
+	 * It loads and plays three songs.
+	 */
 	public void play(){
 		PlayList playlist = new PlayList();
 		
@@ -18,6 +31,9 @@ public class QueueAndPlay3SongsInOrder {
 		
 	}
 	
+	/*
+	 * Entry point for console version of the app. Creates an object of itself and runs it.
+	 */
 	public static void main(String[] args) {
 		QueueAndPlay3SongsInOrder runable = new QueueAndPlay3SongsInOrder();
 		runable.play();

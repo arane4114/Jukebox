@@ -1,3 +1,8 @@
+/*
+ * @ - Author: Abhishek Rane
+ * @ - Author: Bryce Hammond
+ */
+
 package view;
 
 import java.awt.BorderLayout;
@@ -18,12 +23,22 @@ import model.PlayList;
 import model.Song;
 import model.Songs;
 
+/*
+ * This class provides the GUI for our app.
+ * It creates all the visual parts, and listens for song selections. 
+ * It passes song selection information to the model.
+ */
 public class JukeboxGUI extends JFrame {
 	private Songs songs;
 	private JTable table;
 	private JButton play;
 	private PlayList playList;
 
+	/*
+	 * Listens for the play button to be pressed. It then gets the song
+	 * selected, validates if it can be played and if so sends it to the
+	 * playlist.
+	 */
 	private class SelectedSong implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
@@ -40,6 +55,10 @@ public class JukeboxGUI extends JFrame {
 		}
 	}
 
+	/*
+	 * Constructs all GUI elements and creases instances of the model and links
+	 * the two together as needed.
+	 */
 	public JukeboxGUI() {
 
 		String baseDir = System.getProperty("user.dir")
@@ -64,7 +83,7 @@ public class JukeboxGUI extends JFrame {
 				"Untameable Fire", "Pierre Langer", 282));
 
 		table = new JTable(songs);
-		table.setRowSorter(new TableRowSorter<TableModel>(table.getModel())); 
+		table.setRowSorter(new TableRowSorter<TableModel>(table.getModel()));
 
 		play = new JButton("Play");
 		play.addActionListener(new SelectedSong());
@@ -97,7 +116,10 @@ public class JukeboxGUI extends JFrame {
 								+ "Through JUnit testing we have shown a individual student can only play two songs a day.\n"
 								+ "You are not logged in to a student currently.");
 	}
-
+	
+	/*
+	 * Entry point for the console version of the app.
+	 */
 	public static void main(String[] args) {
 		new JukeboxGUI();
 	}

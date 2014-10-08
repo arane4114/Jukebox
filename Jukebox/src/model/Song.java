@@ -1,3 +1,7 @@
+/*
+ * @ - Author: Abhishek Rane
+ * @ - Author: Bryce Hammond
+ */
 package model;
 
 import java.util.ArrayList;
@@ -5,6 +9,10 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+/*
+ * This class is the data item for the song. 
+ * It stores all the data we need for the GUI elements to work in one place.
+ */
 public class Song {
 	private String fileLocation;
 	private String title;

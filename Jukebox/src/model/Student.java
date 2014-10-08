@@ -1,3 +1,7 @@
+/*
+ * @ - Author: Abhishek Rane
+ * @ - Author: Bryce Hammond
+ */
 package model;
 
 import java.util.ArrayList;
@@ -5,6 +9,10 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+/*
+ * This class stores all the data for a student. 
+ * As the spec changed, it isn't used much in this iteration.
+ */
 public class Student {
 
 	private long numberID;

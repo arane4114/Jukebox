@@ -1,3 +1,7 @@
+/*
+ * @ - Author: Abhishek Rane
+ * @ - Author: Bryce Hammond
+ */
 package model;
 
 import java.util.ArrayList;
@@ -8,6 +12,9 @@ import javax.swing.event.ListDataListener;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
+/*
+ * This is out collection class that forms the model that our GUI can read from.
+ */
 public class Songs implements ListModel<Song>, TableModel {
 
 	private ArrayList<Song> songs;

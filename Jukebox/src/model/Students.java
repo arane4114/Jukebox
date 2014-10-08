@@ -1,8 +1,16 @@
+/*
+ * @ - Author: Abhishek Rane
+ * @ - Author: Bryce Hammond
+ */
 package model;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+ * This is the collection class that holds all students.
+ * It isnt used much in this iteration due to the spec changes regarding logins.
+ */
 public class Students {
 
 	private List<Student> students = new ArrayList<Student>();

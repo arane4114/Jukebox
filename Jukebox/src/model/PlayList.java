@@ -1,3 +1,8 @@
+/*
+ * @ - Author: Abhishek Rane
+ * @ - Author: Bryce Hammond
+ */
+
 package model;
 
 import java.util.LinkedList;
