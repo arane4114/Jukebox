@@ -3,6 +3,7 @@ package model;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
 import songPlayer.EndOfSongEvent;
 import songPlayer.EndOfSongListener;
 import songPlayer.SongPlayer;
@@ -11,6 +12,10 @@ public class PlayList {
 	private List<Song> list;
 	private boolean isPlaying;
 	private final int TWO_SECONDS = 2;
+	
+	public static String baseDir = System.getProperty("user.dir")
+			+ System.getProperty("file.separator") + "songfiles"
+			+ System.getProperty("file.separator");
 
 	public PlayList() {
 		list = new LinkedList<Song>();
@@ -19,20 +24,17 @@ public class PlayList {
 
 	public void addSong(Song song) {
 		list.add(song);
-		System.out.println("Added " + song.getTitle());
 		if(!isPlaying){
 			playNextSong();
 		}
 	}
 
 	private void songHasEnded(){
-		System.out.println("Song has ended called");
 		if(list.isEmpty()){
 			this.isPlaying = false;
 		}
 		else{
 			this.isPlaying = false;
-			System.out.println("Waiting for 2 seconds.");
 			try {
 				TimeUnit.SECONDS.sleep(TWO_SECONDS);
 				playNextSong();
@@ -47,14 +49,12 @@ public class PlayList {
 			isPlaying = true;
 			Song currentSong = list.get(0);
 			list.remove(0);
-			System.out.println("Playing " + currentSong.getTitle());
-			SongPlayer.playFile(new EndOfSongListenerObject(), currentSong.getFileLocation());
+			SongPlayer.playFile(new EndOfSongListenerObject(), baseDir + currentSong.getFileLocation());
 		}
 	}
 	
 	private class EndOfSongListenerObject implements EndOfSongListener {
 		public void songFinishedPlaying(EndOfSongEvent eosEvent) {
-			System.out.println("End of song event reached");
 			songHasEnded();
 		}
 	}

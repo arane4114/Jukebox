@@ -17,7 +17,7 @@ public class Song {
 	private List<GregorianCalendar> songPlays;
 
 	public Song(String fileLocation, String title, String artist, int songLength) {
-		this.fileLocation = fileLocation;
+		this.fileLocation =  fileLocation;
 		this.title = title;
 		this.artist = artist;
 		this.songLength = songLength;
@@ -61,6 +61,7 @@ public class Song {
 	}
 
 	public void play() {
+		PlayList playlist = new PlayList();
 		if (playsToday >= MAX_PLAYS) {
 			return;
 		}
@@ -68,6 +69,7 @@ public class Song {
 		if (songPlays.size() < MAX_PLAYS) {
 			songPlays.add(today);
 			incresePlayCount();
+			playlist.addSong(this);
 		} else {
 			GregorianCalendar last1 = songPlays.get(songPlays.size() - 1);
 			GregorianCalendar last2 = songPlays.get(songPlays.size() - 2);
@@ -80,6 +82,7 @@ public class Song {
 			} else {
 				songPlays.add(today);
 				incresePlayCount();
+				playlist.addSong(this);
 			}
 		}
 	}

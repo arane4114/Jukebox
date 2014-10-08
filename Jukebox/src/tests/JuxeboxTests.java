@@ -90,6 +90,86 @@ public class JuxeboxTests {
 
 	}
 	
+//	@Test
+//	public void testTwoSong() {
+//		Song s = new Song("flute.aif", "Flute", "Sun Microsystems", 6)
+//		assertTrue(s.canBePlayedAgainToday());
+//		s.play();
+//		assertTrue(s.canBePlayedAgainToday());
+//		s.play();
+//		assertTrue(s.canBePlayedAgainToday());
+//		s.play();
+//		assertTrue(s.canBePlayedAgainToday());
+//		s.play();
+//		assertTrue(s.canBePlayedAgainToday());
+//		s.play();
+//		assertFalse(s.canBePlayedAgainToday());	
+//		
+//		assertEquals(800, s.getLength());
+//		assertEquals("x", s.getFileLocation());
+//		assertEquals("x", s.getTitle());
+//		assertEquals("x", s.getArtist());
+//		
+//		Song r = new Song("X1" , "X2" ,"X3" , 299);
+//		assertTrue(r.canBePlayedAgainToday());
+//		r.play();
+//		assertTrue(r.canBePlayedAgainToday());
+//		r.play();
+//		assertTrue(r.canBePlayedAgainToday());
+//		r.play();
+//		assertTrue(r.canBePlayedAgainToday());
+//		r.play();
+//		assertTrue(r.canBePlayedAgainToday());
+//		r.play();
+//		assertFalse(r.canBePlayedAgainToday());	
+//		
+//		assertEquals(299, r.getLength());
+//		assertEquals("X1", r.getFileLocation());
+//		assertEquals("X2", r.getTitle());
+//		assertEquals("X3", r.getArtist());
+//		
+//		r.pretendTheDateHasChanged();
+//		
+//		assertTrue(r.canBePlayedAgainToday());
+//		r.play();
+//		assertTrue(r.canBePlayedAgainToday());
+//		r.play();
+//		assertTrue(r.canBePlayedAgainToday());
+//		r.play();
+//		assertTrue(r.canBePlayedAgainToday());
+//		r.play();
+//		assertTrue(r.canBePlayedAgainToday());
+//		r.play();
+//		assertFalse(r.canBePlayedAgainToday());	
+//		
+//		assertEquals(299, r.getLength());
+//		assertEquals("X1", r.getFileLocation());
+//		assertEquals("X2", r.getTitle());
+//		assertEquals("X3", r.getArtist());
+//		
+//		Song z = new Song("X1" , "X2" ,"X3" , 299);
+//		
+//		assertTrue(z.canBePlayedAgainToday());
+//		z.play();
+//		assertTrue(z.canBePlayedAgainToday());
+//		z.play();
+//		
+//		z.pretendTheDateHasChanged();
+//		
+//		assertTrue(z.canBePlayedAgainToday());
+//		z.play();
+//		assertTrue(z.canBePlayedAgainToday());
+//		z.play();
+//		assertTrue(z.canBePlayedAgainToday());
+//		z.play();
+//		assertTrue(z.canBePlayedAgainToday());
+//		z.play();
+//		assertTrue(z.canBePlayedAgainToday());
+//		z.play();
+//		assertFalse(z.canBePlayedAgainToday());	
+//
+//	}
+	
 	@Test
 	public void testOneStudent() {
 		Student s = new Student("BRYCE" , 123);
