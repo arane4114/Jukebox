@@ -1,6 +1,13 @@
 package tests;
 
 import static org.junit.Assert.*;
+
+import javax.swing.JButton;
+import javax.swing.JTable;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
+
+import model.PlayList;
 import model.Song;
 import model.Songs;
 import model.Student;
@@ -90,86 +97,6 @@ public class JuxeboxTests {
 
 	}
 	
-//	@Test
-//	public void testTwoSong() {
-//		Song s = new Song("flute.aif", "Flute", "Sun Microsystems", 6)
-//		assertTrue(s.canBePlayedAgainToday());
-//		s.play();
-//		assertTrue(s.canBePlayedAgainToday());
-//		s.play();
-//		assertTrue(s.canBePlayedAgainToday());
-//		s.play();
-//		assertTrue(s.canBePlayedAgainToday());
-//		s.play();
-//		assertTrue(s.canBePlayedAgainToday());
-//		s.play();
-//		assertFalse(s.canBePlayedAgainToday());	
-//		
-//		assertEquals(800, s.getLength());
-//		assertEquals("x", s.getFileLocation());
-//		assertEquals("x", s.getTitle());
-//		assertEquals("x", s.getArtist());
-//		
-//		Song r = new Song("X1" , "X2" ,"X3" , 299);
-//		assertTrue(r.canBePlayedAgainToday());
-//		r.play();
-//		assertTrue(r.canBePlayedAgainToday());
-//		r.play();
-//		assertTrue(r.canBePlayedAgainToday());
-//		r.play();
-//		assertTrue(r.canBePlayedAgainToday());
-//		r.play();
-//		assertTrue(r.canBePlayedAgainToday());
-//		r.play();
-//		assertFalse(r.canBePlayedAgainToday());	
-//		
-//		assertEquals(299, r.getLength());
-//		assertEquals("X1", r.getFileLocation());
-//		assertEquals("X2", r.getTitle());
-//		assertEquals("X3", r.getArtist());
-//		
-//		r.pretendTheDateHasChanged();
-//		
-//		assertTrue(r.canBePlayedAgainToday());
-//		r.play();
-//		assertTrue(r.canBePlayedAgainToday());
-//		r.play();
-//		assertTrue(r.canBePlayedAgainToday());
-//		r.play();
-//		assertTrue(r.canBePlayedAgainToday());
-//		r.play();
-//		assertTrue(r.canBePlayedAgainToday());
-//		r.play();
-//		assertFalse(r.canBePlayedAgainToday());	
-//		
-//		assertEquals(299, r.getLength());
-//		assertEquals("X1", r.getFileLocation());
-//		assertEquals("X2", r.getTitle());
-//		assertEquals("X3", r.getArtist());
-//		
-//		Song z = new Song("X1" , "X2" ,"X3" , 299);
-//		
-//		assertTrue(z.canBePlayedAgainToday());
-//		z.play();
-//		assertTrue(z.canBePlayedAgainToday());
-//		z.play();
-//		
-//		z.pretendTheDateHasChanged();
-//		
-//		assertTrue(z.canBePlayedAgainToday());
-//		z.play();
-//		assertTrue(z.canBePlayedAgainToday());
-//		z.play();
-//		assertTrue(z.canBePlayedAgainToday());
-//		z.play();
-//		assertTrue(z.canBePlayedAgainToday());
-//		z.play();
-//		assertTrue(z.canBePlayedAgainToday());
-//		z.play();
-//		assertFalse(z.canBePlayedAgainToday());	
-//
-//	}
-	
 	@Test
 	public void testOneStudent() {
 		Student s = new Student("BRYCE" , 123);
@@ -237,17 +164,54 @@ public class JuxeboxTests {
 	
 	@Test
 	public void testOneSongs() {
-		Song a = new Song("a" , "a" ,"a" , 1);
-		Song b = new Song("b" , "b" ,"b" , 2);
-		Song c = new Song("c" , "c" ,"c" , 3);
-		Song d = new Song("d" , "d" ,"d" , 4);
+
+		Songs songs = new Songs();
+		Song x = new Song("BlueRidgeMountainMist.mp3", "Blue Ridge Mountain Mist", "Ralph Schuckett", 38);
 		
-		Songs abcd = new Songs();
+		songs.addSong(x);
+		songs.addSong(new Song("DeterminedTumbao.mp3", "Determined Tumbao", "FreePlay Music", 20));
+		songs.addSong(new Song("flute.aif", "Flute", "Sun Microsystems", 5));
+		songs.addSong(new Song("spacemusic.au", "Spacemusic", "Unknown", 6));
+		songs.addSong(new Song("SwingCheese.mp3", "Swing Cheese", "FreePlay Music", 15));
+		songs.addSong(new Song("tada.wav", "Tada", "Microsoft", 2));
+		songs.addSong(new Song("UntameableFire.mp3", "Untameable Fire", "Pierre Langer", 282));
+
+
+				JTable table = new JTable(songs);
+				table.setRowSorter(new TableRowSorter<TableModel>(table.getModel())); // needed for sorting
+	
+		assertEquals(String.class, table.getColumnClass(0));
+		assertEquals(String.class, table.getColumnClass(1));
+		assertEquals(null, table.getColumnClass(-1));
 		
-		abcd.addSong(a);
-		abcd.addSong(b);
-		abcd.addSong(c);
-		abcd.addSong(d);
+		assertEquals("error", table.getColumnName(-1));
 		
+		assertEquals("Ralph Schuckett", table.getValueAt(0, 0));
+		assertEquals("Blue Ridge Mountain Mist", table.getValueAt(0, 1));
+		assertEquals(38, table.getValueAt(0, 2));
+		//assertEquals(null, table.getValueAt(0, 3));
+		
+		assertEquals(x, songs.getSongAt(0));
+		
+		assertFalse(table.isCellEditable(0,0));
+		
+		assertEquals(7, songs.getSize());
+	}
+	
+	@Test
+	public void testOnePlayList() {
+
+		PlayList playList = new PlayList();
+		
+		playList.addSong(new Song("BlueRidgeMountainMist.mp3", "Blue Ridge Mountain Mist", "Ralph Schuckett", 38));
+		playList.addSong(new Song("DeterminedTumbao.mp3", "Determined Tumbao", "FreePlay Music", 20));
+		playList.addSong(new Song("flute.aif", "Flute", "Sun Microsystems", 5));
+		playList.addSong(new Song("spacemusic.au", "Spacemusic", "Unknown", 6));
+		playList.addSong(new Song("SwingCheese.mp3", "Swing Cheese", "FreePlay Music", 15));
+		playList.addSong(new Song("tada.wav", "Tada", "Microsoft", 2));
+		playList.addSong(new Song("UntameableFire.mp3", "Untameable Fire", "Pierre Langer", 282));
+
+		
+
 	}
 }

@@ -100,7 +100,6 @@ public class Songs implements ListModel<Song>, TableModel {
 
 	@Override
 	public Song getElementAt(int index) {
-		// TODO Auto-generated method stub
 		if (index < 0 || index > songs.size()) // check for valid index
 			return null;
 		
