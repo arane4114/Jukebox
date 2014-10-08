@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -91,6 +92,11 @@ public class JukeboxGUI extends JFrame {
 		this.setSize(600, 300);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
+
+		JOptionPane.showMessageDialog(new JFrame(),
+				"This GUI shows the behavior of individual songs ( a song can be played 5 times a day and mutiple songs can be queued).\n"	+ 
+						"Through JUnit test we have shown a individual student can only play two songs a day.\n"	+
+								"You are not logged in to a student currently.");
 	}
 
 	public static void main(String[] args) {
