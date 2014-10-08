@@ -16,6 +16,10 @@ import org.junit.Test;
 
 public class JuxeboxTests {
 
+	/*
+	 * Test That a song can be only played 5 times a day.
+	 * And simulates day change.
+	 */
 	@Test
 	public void testOneSong() {
 		Song s = new Song("x", "x", "x", 800);
@@ -96,6 +100,10 @@ public class JuxeboxTests {
 
 	}
 
+	/*
+	 * Test that a student can only play 2 songs a day.
+	 * Also simulates the day has changed.
+	 */
 	@Test
 	public void testOneStudent() {
 		Student s = new Student("BRYCE", 123);
@@ -134,6 +142,9 @@ public class JuxeboxTests {
 		assertEquals(123, s.getNumberID());
 	}
 
+	/*
+	 * Tests search methods for Students.
+	 */
 	@Test
 	public void testOneStudents() {
 		Student a = new Student("BRYCE", 123);
@@ -161,6 +172,10 @@ public class JuxeboxTests {
 		assertEquals(null, abcd.getStudent(1243));
 	}
 
+	/*
+	 * Test table methods in Songs.
+	 * And call constructor.
+	 */
 	@Test 
 	public void testOneSongs() {
 			
@@ -205,6 +220,9 @@ public class JuxeboxTests {
 		assertEquals(7, songs.getSize());
 	}
 
+	/*
+	 * Calls play list Constructor.
+	 */
 	@Test
 	public void testOnePlayList() {
 
