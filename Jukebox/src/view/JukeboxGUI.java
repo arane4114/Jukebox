@@ -64,24 +64,19 @@ public class JukeboxGUI extends JFrame {
 				"Untameable Fire", "Pierre Langer", 282));
 
 		table = new JTable(songs);
-		table.setRowSorter(new TableRowSorter<TableModel>(table.getModel())); // needed
-																				// for
-																				// sorting
+		table.setRowSorter(new TableRowSorter<TableModel>(table.getModel())); 
 
 		play = new JButton("Play");
 		play.addActionListener(new SelectedSong());
 
-		// left side
 		JPanel center = new JPanel();
 		center.setLayout(new BorderLayout());
 
-		// add the table to the center of the left side
 		center.add(new JScrollPane(table), BorderLayout.CENTER);
 
 		JPanel top = new JPanel();
 		top.add(new JLabel("Songs Table"));
 
-		// add centered label to top of left side
 		center.add(top, BorderLayout.NORTH);
 
 		JPanel bottom = new JPanel();
@@ -90,7 +85,6 @@ public class JukeboxGUI extends JFrame {
 
 		this.add(center);
 
-		// frame setup
 		this.setSize(600, 300);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
