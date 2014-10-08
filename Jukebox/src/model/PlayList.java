@@ -11,7 +11,7 @@ import songPlayer.SongPlayer;
 public class PlayList {
 	private List<Song> list;
 	private boolean isPlaying;
-	private final int TWO_SECONDS = 2;
+	private final int TWO_SECONDS = 2000;
 	
 	public static String baseDir = System.getProperty("user.dir")
 			+ System.getProperty("file.separator") + "songfiles"
@@ -36,10 +36,10 @@ public class PlayList {
 		else{
 			this.isPlaying = false;
 			try {
-				TimeUnit.SECONDS.sleep(TWO_SECONDS);
+				Thread.sleep(TWO_SECONDS);
 				playNextSong();
 			}catch(InterruptedException e){
-				// Should Never Happen
+				e.printStackTrace();
 			}
 		}
 	}

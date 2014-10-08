@@ -50,13 +50,13 @@ public class JukeboxGUI extends JFrame{
 		playList = new PlayList();
 
 		songs = new Songs();
-		songs.addSong(new Song("BlueRidgeMountainMist.mp3", "Blue Ridge Moutain Mist", "Blue Ridge Moutain Mist", 100));
-		songs.addSong(new Song("DeterminedTumbao.mp3", "Determined Tumbao", "Determined Tumbao", 100));
-		songs.addSong(new Song("flute.aif", "Flute", "Flute", 100));
-		songs.addSong(new Song("spacemusic.au", "Spacemusic", "Spacemusic", 100));
-		songs.addSong(new Song("SwingCheese.mp3", "Swing Cheese", "Swing Cheese", 100));
-		songs.addSong(new Song("tada.wav", "Tada", "Tada", 100));
-		songs.addSong(new Song("UntameableFire.mp3", "Untameable Fire", "Untameable Fire", 100));
+		songs.addSong(new Song("BlueRidgeMountainMist.mp3", "Blue Ridge Mountain Mist", "Ralph Schuckett", 38));
+		songs.addSong(new Song("DeterminedTumbao.mp3", "Determined Tumbao", "FreePlay Music", 20));
+		songs.addSong(new Song("flute.aif", "Flute", "Sun Microsystems", 5));
+		songs.addSong(new Song("spacemusic.au", "Spacemusic", "Unknown", 6));
+		songs.addSong(new Song("SwingCheese.mp3", "Swing Cheese", "FreePlay Music", 15));
+		songs.addSong(new Song("tada.wav", "Tada", "Microsoft", 2));
+		songs.addSong(new Song("UntameableFire.mp3", "Untameable Fire", "Pierre Langer", 282));
 
 
 				table = new JTable(songs);
