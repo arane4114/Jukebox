@@ -15,7 +15,7 @@ public class Students {
 		students.add(student);
 	}
 	
-	public boolean contains(int numberID){
+	public boolean contains(long numberID){
 		for(Student student : students){
 			if(student.getNumberID() == numberID){
 				return true;
@@ -24,7 +24,7 @@ public class Students {
 		return false;
 	}
 	
-	public Student getStudent(int numberID){
+	public Student getStudent(long numberID){
 		for(Student student : students){
 			if(student.getNumberID() == numberID){
 				return student;

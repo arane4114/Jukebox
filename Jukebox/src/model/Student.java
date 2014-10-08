@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Student {
 
-	private int numberID;
+	private long numberID;
 	private String name;
 	private int secondsPlayed;
 	private int playsToday;
@@ -17,7 +17,7 @@ public class Student {
 	
 	private List<GregorianCalendar> dayPlays;
 	
-	public Student(String name, int numberID) {
+	public Student(String name, long numberID) {
 		this.name = name;
 		this.numberID = numberID;
 		this.secondsPlayed = 0;
@@ -29,7 +29,7 @@ public class Student {
 		return name;
 	}
 	
-	public int getNumberID(){
+	public long getNumberID(){
 		return numberID;
 	}
 	
