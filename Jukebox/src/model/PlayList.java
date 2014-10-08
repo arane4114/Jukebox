@@ -1,8 +1,8 @@
 package model;
 
 import java.util.LinkedList;
+
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import songPlayer.EndOfSongEvent;
 import songPlayer.EndOfSongListener;

@@ -1,20 +1,19 @@
 package view;
 
 import java.awt.BorderLayout;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
-import model.Jukebox;
 import model.PlayList;
 import model.Song;
 import model.Songs;
@@ -22,7 +21,6 @@ import model.Songs;
 public class JukeboxGUI extends JFrame{
 	private Songs songs;
 	private JTable table;
-	private JList<Song> list;
 	private JButton play;
 	private PlayList playList;
 	
@@ -61,7 +59,6 @@ public class JukeboxGUI extends JFrame{
 
 				table = new JTable(songs);
 				table.setRowSorter(new TableRowSorter<TableModel>(table.getModel())); // needed for sorting
-				list = new JList<Song>(songs);
 				
 				play = new JButton("Play");
 				play.addActionListener(new SelectedSong());
