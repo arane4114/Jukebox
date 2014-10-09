@@ -1,3 +1,6 @@
+/*
+ * Taken from starter project
+ */
 package songPlayer;
 
 /**

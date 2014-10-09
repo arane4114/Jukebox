@@ -1,3 +1,6 @@
+/*
+ * Taken from starter project
+ */
 /**
  * This class allows songs to be played in separate threads so they can
  * play concurrently.  It is also possible to register and EndOfSongListener
