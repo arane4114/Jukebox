@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /*
  * This class stores all the data for a student. 
@@ -26,8 +27,7 @@ public class Student {
 	private List<GregorianCalendar> dayPlays;
 
 	/*
-	 * Constructor for student.
-	 * Student takes a name and ID
+	 * Constructor for student. Student takes a name and ID
 	 */
 	public Student(String name, long numberID) {
 		this.name = name;
@@ -66,6 +66,35 @@ public class Student {
 	}
 
 	/*
+	 * referneced from
+	 * http://stackoverflow.com/questions/11357945/java-convert-seconds
+	 * -into-day-hour-minute-and-seconds-using-timeunit
+	 */
+	public String getSecondsLeftInHMS() {
+		int seconds = getSecondsLeft();
+		long hours = TimeUnit.SECONDS.toHours(seconds);
+		long minute = TimeUnit.SECONDS.toMinutes(seconds)
+				- (TimeUnit.SECONDS.toHours(seconds) * 60);
+		long second = TimeUnit.SECONDS.toSeconds(seconds)
+				- (TimeUnit.SECONDS.toMinutes(seconds) * 60);
+		String minuteString;
+		if(minute < 10){
+			minuteString = "0"+minute;
+		}
+		else{
+			minuteString = Long.toString(minute);
+;		}
+		String secondString;
+		if(second < 10){
+			secondString = "0" + Long.toString(second);
+		}
+		else{
+			secondString = Long.toString(second);
+		}
+		return hours + ":" + minuteString + ":" + secondString;
+	}
+
+	/*
 	 * Getter for plays today.
 	 */
 	public int getPlaysToday() {
@@ -80,18 +109,18 @@ public class Student {
 	}
 
 	/*
-	 * Returns a boolean.
-	 * If the another song can be played or not by that student.
+	 * Returns a boolean. If the another song can be played or not by that
+	 * student.
 	 */
-	public boolean canPlay() {
+	public boolean canPlay(Song song) {
 		dateCheck();
-		return playsToday < MAX_PLAYS;
+		return playsToday < MAX_PLAYS && getSecondsLeft() >= song.getLength();
 	}
 
 	/*
-	 * Checks if the date has changed since the last time the 
-	 * song was played. If it is a new data set playsToday = 0;
-	 * If it is not a new day do nothing.
+	 * Checks if the date has changed since the last time the song was played.
+	 * If it is a new data set playsToday = 0; If it is not a new day do
+	 * nothing.
 	 */
 	private void dateCheck() {
 		if (playsToday > 0) {
@@ -114,12 +143,10 @@ public class Student {
 	}
 
 	/*
-	 * Tell the song that it has been played.
-	 * Play still check if the song can be played.
-	 * Adds play dates to list.
-	 * Increases playToday.
+	 * Tell the song that it has been played. Play still check if the song can
+	 * be played. Adds play dates to list. Increases playToday.
 	 */
-	public void play() {
+	public void play(Song song) {
 		dateCheck();
 		if (playsToday >= MAX_PLAYS) {
 			return;
@@ -128,6 +155,7 @@ public class Student {
 		if (dayPlays.size() < MAX_PLAYS) {
 			dayPlays.add(today);
 			incresePlayCount();
+			secondsPlayed += song.getLength();
 		} else {
 			GregorianCalendar last1 = dayPlays.get(dayPlays.size() - 1);
 			GregorianCalendar last2 = dayPlays.get(dayPlays.size() - 2);
@@ -136,10 +164,11 @@ public class Student {
 			} else {
 				dayPlays.add(today);
 				incresePlayCount();
+				secondsPlayed += song.getLength();
 			}
 		}
 	}
-	
+
 	/*
 	 * Simulates if the date has changed.
 	 */

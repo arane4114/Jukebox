@@ -153,4 +153,8 @@ public class Song {
 			songPlays.get(songPlays.size() - i).add(Calendar.DATE, -1);
 		}
 	}
+	
+	public String toString(){
+		return title + " by " + artist;
+	}
 }

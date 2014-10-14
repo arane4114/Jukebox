@@ -41,16 +41,51 @@ public class Students {
 		}
 		return false;
 	}
-
+	
+	private boolean studentExists(String name){
+		for(Student student: students){
+			if(student.getName().equals(name)){
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	/*
 	 * Return Student that has a passed in ID.
 	 */
-	public Student getStudent(long numberID) {
+	public Student getStudentById(long numberID) {
 		for (Student student : students) {
 			if (student.getNumberID() == numberID) {
 				return student;
 			}
 		}
 		return null;
+	}
+	
+	public Student getStudentByName(String name){
+		for (Student student : students) {
+			if (student.getName().endsWith(name)) {
+				return student;
+			}
+		}
+		return null;
+	}
+	
+	public boolean login(String name, char[] passkey){
+		boolean studentExists = studentExists(name);
+		if(!studentExists){
+			return false;
+		}
+		Student currentStudent = getStudentByName(name);
+		long passKeyNumericalVersion = 0;
+		for(int i = 0; i < 4; i++){
+			passKeyNumericalVersion += Long.parseLong(""+ passkey[i]) * Math.pow(10, 3-i);
+		}
+		if(currentStudent.getNumberID() == passKeyNumericalVersion){
+			return true;
+		}else{
+			return false;
+		} 
 	}
 }

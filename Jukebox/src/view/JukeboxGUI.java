@@ -6,22 +6,31 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
+import model.CurrentSongListener;
 import model.PlayList;
 import model.Song;
 import model.Songs;
+import model.Student;
+import model.Students;
 
 /*
  * This class provides the GUI for our app.
@@ -29,31 +38,18 @@ import model.Songs;
  * It passes song selection information to the model.
  */
 public class JukeboxGUI extends JFrame {
-	private Songs songs;
 	private JTable table;
 	private JButton play;
+	private JButton login;
+	private JLabel currentSongLabel;
+	private JTextArea currentUserInfoArea;
+	private JTextField userNameInputField;
+	private JPasswordField userPasswordField;
+
+	private Student currentStudent;
 	private PlayList playList;
-
-	/*
-	 * Listens for the play button to be pressed. It then gets the song
-	 * selected, validates if it can be played and if so sends it to the
-	 * playlist.
-	 */
-	private class SelectedSong implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent arg0) {
-
-			int selectedRow = table.getSelectedRow();
-			int selectedColumn = table.getSelectedColumn();
-
-			if (selectedColumn != -1 && selectedRow != -1) {
-				if (songs.getSongAt(selectedRow).canBePlayedAgainToday()) {
-					playList.addSong(songs.getSongAt(selectedRow));
-					songs.getSongAt(selectedRow).play();
-				}
-			}
-		}
-	}
+	private Songs songs;
+	private Students students;
 
 	/*
 	 * Constructs all GUI elements and creases instances of the model and links
@@ -82,41 +78,142 @@ public class JukeboxGUI extends JFrame {
 		songs.addSong(new Song(baseDir + "UntameableFire.mp3",
 				"Untameable Fire", "Pierre Langer", 282));
 
+		students = new Students();
+		students.addStudent(new Student("Ali", 1111));
+		students.addStudent(new Student("Chris", 2222));
+		students.addStudent(new Student("River", 3333));
+		students.addStudent(new Student("Ryan", 4444));
+
 		table = new JTable(songs);
 		table.setRowSorter(new TableRowSorter<TableModel>(table.getModel()));
 
 		play = new JButton("Play");
 		play.addActionListener(new SelectedSong());
 
-		JPanel center = new JPanel();
-		center.setLayout(new BorderLayout());
+		this.setLayout(new GridLayout(1, 3));
+		this.setTitle("Jukebox");
 
-		center.add(new JScrollPane(table), BorderLayout.CENTER);
+		JPanel leftPanel = new JPanel();
+		leftPanel.setLayout(new BorderLayout());
+
+		leftPanel.add(new JScrollPane(table), BorderLayout.CENTER);
 
 		JPanel top = new JPanel();
 		top.add(new JLabel("Songs Table"));
 
-		center.add(top, BorderLayout.NORTH);
+		leftPanel.add(top, BorderLayout.NORTH);
 
 		JPanel bottom = new JPanel();
 		bottom.add(play);
-		center.add(bottom, BorderLayout.SOUTH);
+		leftPanel.add(bottom, BorderLayout.SOUTH);
 
-		this.add(center);
+		this.add(leftPanel);
 
-		this.setSize(600, 300);
+		JPanel middlePanel = new JPanel();
+		middlePanel.setLayout(new BoxLayout(middlePanel, BoxLayout.Y_AXIS));
+
+		middlePanel.add(new JLabel("Now Playing:"));
+		currentSongLabel = new JLabel("No Song Playing");
+		middlePanel.add(currentSongLabel);
+		playList.addCurrentSongListener(new currentSongListener());
+
+		middlePanel.add(new JLabel("Up Next:"));
+		JList<Song> playListJList = new JList<Song>(playList);
+		middlePanel.add(new JScrollPane(playListJList));
+
+		this.add(middlePanel);
+
+		JPanel rightPanel = new JPanel();
+		rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS));
+
+		rightPanel.add(new JLabel("Current User Info"));
+		currentUserInfoArea = new JTextArea();
+		currentUserInfoArea.setEditable(false);
+		currentUserInfoArea.setSize(200, 200);
+		rightPanel.add(currentUserInfoArea);
+
+		userNameInputField = new JTextField("User name");
+		rightPanel.add(userNameInputField);
+
+		userPasswordField = new JPasswordField("ID");
+		rightPanel.add(userPasswordField);
+
+		login = new JButton();
+		login.addActionListener(new loginButtonListener());
+		login.setText("Login");
+		rightPanel.add(login, BorderLayout.CENTER);
+
+		this.add(rightPanel);
+
+		this.setSize(900, 550);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
-
-		JOptionPane
-				.showMessageDialog(
-						new JFrame(),
-						"This GUI shows the behavior of individual songs.\n"
-								+ "( a song can be played 5 times a day and mutiple songs can be queued )\n"
-								+ "Through JUnit testing we have shown a individual student can only play two songs a day.\n"
-								+ "You are not logged in to a student currently.");
 	}
-	
+
+	private void updateCurrentStudentData() {
+		this.currentUserInfoArea.setText("User Name: "
+				+ currentStudent.getName() + "\n" + "Time left: "
+				+ currentStudent.getSecondsLeftInHMS() + "\n"
+				+ "Number of Plays Today: " + currentStudent.getPlaysToday());
+	}
+
+	private class loginButtonListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+
+			if (students.login(userNameInputField.getText(),
+					userPasswordField.getPassword())) {
+				currentStudent = students.getStudentByName(userNameInputField
+						.getText());
+				updateCurrentStudentData();
+			} else {
+				JOptionPane.showMessageDialog(new JFrame(),
+						"The user name and password combination is invalid.");
+			}
+		}
+
+	}
+
+	private class currentSongListener implements CurrentSongListener {
+
+		@Override
+		public void noSongIsPlaying() {
+			currentSongLabel.setText("No Song Playing");
+		}
+
+		@Override
+		public void newCurrentSongIs(Song song) {
+			currentSongLabel.setText(song.toString());
+
+		}
+
+	}
+
+	/*
+	 * Listens for the play button to be pressed. It then gets the song
+	 * selected, validates if it can be played and if so sends it to the
+	 * playlist.
+	 */
+	private class SelectedSong implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+
+			int selectedRow = table.getSelectedRow();
+			int selectedColumn = table.getSelectedColumn();
+
+			if (selectedColumn != -1 && selectedRow != -1) {
+				if (songs.getSongAt(selectedRow).canBePlayedAgainToday()
+						&& currentStudent.canPlay(songs.getSongAt(selectedRow))) {
+					playList.addSong(songs.getSongAt(selectedRow));
+					songs.getSongAt(selectedRow).play();
+					currentStudent.play(songs.getSongAt(selectedRow));
+					updateCurrentStudentData();
+				}
+			}
+		}
+	}
+
 	/*
 	 * Entry point for the console version of the app.
 	 */
