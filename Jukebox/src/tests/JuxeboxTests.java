@@ -108,45 +108,47 @@ public class JuxeboxTests {
 	 * Test that a student can only play 2 songs a day.
 	 * Also simulates the day has changed.
 	 */
-	/*
+
 	@Test
 	public void testOneStudent() {
+		
+		Song song = new Song("x" , "x" , "X", 10);
+		
 		Student s = new Student("BRYCE", 123);
 
 		assertEquals(0, s.getSecondsPlayed());
 		assertEquals(90000, s.getSecondsLeft());
 		assertEquals(0, s.getPlaysToday());
 
-		assertTrue(s.canPlay());
-		s.play();
-		assertTrue(s.canPlay());
-		s.play();
-		assertFalse(s.canPlay());
-		s.play();
-		assertFalse(s.canPlay());
-		s.play();
-		assertFalse(s.canPlay());
-		s.play();
-		assertFalse(s.canPlay());
+		assertTrue(s.canPlay(song));
+		s.play(song);
+		assertTrue(s.canPlay(song));
+		s.play(song);
+		assertFalse(s.canPlay(song));
+		s.play(song);
+		assertFalse(s.canPlay(song));
+		s.play(song);
+		assertFalse(s.canPlay(song));
+		s.play(song);
+		assertFalse(s.canPlay(song));
 
 		s.pretendTheDateHasChanged();
 
-		assertTrue(s.canPlay());
-		s.play();
-		assertTrue(s.canPlay());
-		s.play();
-		assertFalse(s.canPlay());
-		s.play();
-		assertFalse(s.canPlay());
-		s.play();
-		assertFalse(s.canPlay());
-		s.play();
-		assertFalse(s.canPlay());
+		assertTrue(s.canPlay(song));
+		s.play(song);
+		assertTrue(s.canPlay(song));
+		s.play(song);
+		assertFalse(s.canPlay(song));
+		s.play(song);
+		assertFalse(s.canPlay(song));
+		s.play(song);
+		assertFalse(s.canPlay(song));
+		s.play(song);
+		assertFalse(s.canPlay(song));
 
 		assertEquals("BRYCE", s.getName());
 		assertEquals(123, s.getNumberID());
 	}
-	*/
 
 	/*
 	 * Tests search methods for Students.

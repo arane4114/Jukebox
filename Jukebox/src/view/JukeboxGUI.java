@@ -6,11 +6,13 @@
 package view;
 
 import java.awt.BorderLayout;
-
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -39,12 +41,13 @@ public class JukeboxGUI extends JFrame {
 	private JTable table;
 	private JButton play;
 	private JButton login;
+	private JButton logout;
 	private JLabel currentSongLabel;
 	private JTextArea currentUserInfoArea;
 	private JTextField userNameInputField;
 	private JPasswordField userPasswordField;
 	
-	private Jukebox box;
+	private Jukebox jukebox;
 
 	/*
 	 * Constructs all GUI elements and creases instances of the model and links
@@ -52,9 +55,9 @@ public class JukeboxGUI extends JFrame {
 	 */
 	public JukeboxGUI() {
 		
-		box = new Jukebox();
+		jukebox = new Jukebox();
 
-		table = new JTable(box.getSongs());
+		table = new JTable(jukebox.getSongs());
 		table.setRowSorter(new TableRowSorter<TableModel>(table.getModel()));
 
 		play = new JButton("Play");
@@ -72,7 +75,7 @@ public class JukeboxGUI extends JFrame {
 		top.add(new JLabel("Songs Table"));
 
 		leftPanel.add(top, BorderLayout.NORTH);
-
+		
 		JPanel bottom = new JPanel();
 		bottom.add(play);
 		leftPanel.add(bottom, BorderLayout.SOUTH);
@@ -85,34 +88,51 @@ public class JukeboxGUI extends JFrame {
 		middlePanel.add(new JLabel("Now Playing:"));
 		currentSongLabel = new JLabel("No Song Playing");
 		middlePanel.add(currentSongLabel);
-		box.getPlayList().addCurrentSongListener(new currentSongListener());
+		jukebox.getPlayList().addCurrentSongListener(new currentSongListener());
 
 		middlePanel.add(new JLabel("Up Next:"));
-		JList<Song> playListJList = new JList<Song>(box.getPlayList());
+		JList<Song> playListJList = new JList<Song>(jukebox.getPlayList());
 		middlePanel.add(new JScrollPane(playListJList));
 
+		middlePanel.add(Box.createRigidArea(new Dimension(5,36)));
+		
 		this.add(middlePanel);
 
 		JPanel rightPanel = new JPanel();
 		rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS));
 
 		rightPanel.add(new JLabel("Current User Info"));
-		currentUserInfoArea = new JTextArea();
+		
+		rightPanel.add(Box.createRigidArea(new Dimension(5, 32)));
+		
+		currentUserInfoArea = new JTextArea(100, 1);
 		currentUserInfoArea.setEditable(false);
-		currentUserInfoArea.setSize(200, 200);
 		rightPanel.add(currentUserInfoArea);
-
+		
+		updateCurrentStudentData();
+		
+		rightPanel.add(Box.createRigidArea(new Dimension(5,5)));
+		
 		userNameInputField = new JTextField("User name");
 		rightPanel.add(userNameInputField);
 
-		userPasswordField = new JPasswordField("ID");
+		userPasswordField = new JPasswordField("XXXX");
 		rightPanel.add(userPasswordField);
+		
+		JPanel loginLogout = new JPanel();
 
 		login = new JButton();
 		login.addActionListener(new loginButtonListener());
 		login.setText("Login");
-		rightPanel.add(login, BorderLayout.CENTER);
-
+		loginLogout.add(login, BorderLayout.WEST);
+		
+		logout = new JButton();
+		logout.addActionListener(new logoutButtonListener());
+		logout.setText("Logout");
+		loginLogout.add(logout, BorderLayout.EAST);
+		
+		rightPanel.add(loginLogout);	
+		
 		this.add(rightPanel);
 
 		this.setSize(900, 550);
@@ -121,36 +141,65 @@ public class JukeboxGUI extends JFrame {
 	}
 
 	private void updateCurrentStudentData() {
-		this.currentUserInfoArea.setText("User Name: "
-				+ box.getCurrentStudent().getName() + "\n" + "Time left: "
-				+ box.getCurrentStudent().getSecondsLeftInHMS() + "\n"
-				+ "Number of Plays Today: " + box.getCurrentStudent().getPlaysToday());
+		if(jukebox.getLoggedIn() == true){
+			this.currentUserInfoArea.setText("User Name: "
+					+ jukebox.getCurrentStudent().getName() + "\n" + "Time left: "
+					+ jukebox.getCurrentStudent().getSecondsLeftInHMS() + "\n"
+					+ "Number of Plays Today: " + jukebox.getCurrentStudent().getPlaysToday());
+		}else{
+			this.currentUserInfoArea.setText("User Name: No User Currently"
+					+ "\n" + "Time left: "
+					+ "--:--:--" + "\n"
+					+ "Number of Plays Today: --");
+		}
 	}
 
+	/*
+	 * Listens for a login attempt. Then runs the logic to see if it is a valid user.
+	 */
 	private class loginButtonListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
-			if (box.getStudents().login(userNameInputField.getText(),
+			if (jukebox.getStudents().login(userNameInputField.getText(),
 					userPasswordField.getPassword())) {
-				box.setCurrentStudent(box.getStudents().getStudentByName(userNameInputField
+				jukebox.setCurrentStudent(jukebox.getStudents().getStudentByName(userNameInputField
 						.getText()));
 				updateCurrentStudentData();
+				userNameInputField.setText("User name");
+				userPasswordField.setText("XXXX");
 			} else {
 				JOptionPane.showMessageDialog(new JFrame(),
 						"The user name and password combination is invalid.");
+				userNameInputField.setText("User name");
+				userPasswordField.setText("XXXX");
 			}
 		}
-
 	}
 
+	private class logoutButtonListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if(jukebox.getLoggedIn() == true){
+				jukebox.logout();
+				updateCurrentStudentData();
+				userNameInputField.setText("User name");
+				userPasswordField.setText("XXXX");
+			}
+		}
+	}
+	/*
+	 * Listens for the current songs status. It then gets the tells
+	 * the user that information..
+	 */
 	private class currentSongListener implements CurrentSongListener {
 
 		@Override
 		public void noSongIsPlaying() {
 			currentSongLabel.setText("No Song Playing");
-		}
+		}	
 
 		@Override
 		public void newCurrentSongIs(Song song) {
@@ -173,12 +222,14 @@ public class JukeboxGUI extends JFrame {
 			int selectedColumn = table.getSelectedColumn();
 
 			if (selectedColumn != -1 && selectedRow != -1) {
-				if (box.getSongs().getSongAt(selectedRow).canBePlayedAgainToday()
-						&& box.getCurrentStudent().canPlay(box.getSongs().getSongAt(selectedRow))) {
-					box.getPlayList().addSong(box.getSongs().getSongAt(selectedRow));
-					box.getSongs().getSongAt(selectedRow).play();
-					box.getCurrentStudent().play(box.getSongs().getSongAt(selectedRow));
-					updateCurrentStudentData();
+				if(jukebox.getLoggedIn()){
+					if (jukebox.getSongs().getSongAt(selectedRow).canBePlayedAgainToday()
+							&& jukebox.getCurrentStudent().canPlay(jukebox.getSongs().getSongAt(selectedRow))) {
+						jukebox.getPlayList().addSong(jukebox.getSongs().getSongAt(selectedRow));
+						jukebox.getSongs().getSongAt(selectedRow).play();
+						jukebox.getCurrentStudent().play(jukebox.getSongs().getSongAt(selectedRow));
+						updateCurrentStudentData();
+					}
 				}
 			}
 		}

@@ -6,6 +6,7 @@ public class Jukebox {
 	private PlayList playList;
 	private Songs songs;
 	private Students students;
+	private boolean loggedIn;
 	
 	public Jukebox(){
 		
@@ -36,6 +37,8 @@ public class Jukebox {
 		students.addStudent(new Student("River", 3333));
 		students.addStudent(new Student("Ryan", 4444));
 		
+		loggedIn = false;
+		
 	}
 	
 	public Songs getSongs(){
@@ -48,6 +51,16 @@ public class Jukebox {
 	
 	public void setCurrentStudent(Student student){
 		currentStudent = student;
+		loggedIn = true;
+	}
+	
+	public void logout(){
+		currentStudent = null;
+		loggedIn = false;
+	}
+	
+	public boolean getLoggedIn(){
+		return loggedIn;
 	}
 	
 	public PlayList getPlayList(){
