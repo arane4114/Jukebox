@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class Student {
 
-	private long numberID;
+	private String password;
 	private String name;
 	private int secondsPlayed;
 	private int playsToday;
@@ -29,9 +29,9 @@ public class Student {
 	/*
 	 * Constructor for student. Student takes a name and ID
 	 */
-	public Student(String name, long numberID) {
+	public Student(String name, String password) {
 		this.name = name;
-		this.numberID = numberID;
+		this.password = password;
 		this.secondsPlayed = 0;
 		this.playsToday = 0;
 		this.dayPlays = new ArrayList<GregorianCalendar>();
@@ -47,8 +47,8 @@ public class Student {
 	/*
 	 * Getter for Student ID number.
 	 */
-	public long getNumberID() {
-		return numberID;
+	public String getPassword() {
+		return password;
 	}
 
 	/*

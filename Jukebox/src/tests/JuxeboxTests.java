@@ -114,7 +114,7 @@ public class JuxeboxTests {
 		
 		Song song = new Song("x" , "x" , "X", 10);
 		
-		Student s = new Student("BRYCE", 123);
+		Student s = new Student("BRYCE", "123");
 
 		assertEquals(0, s.getSecondsPlayed());
 		assertEquals(90000, s.getSecondsLeft());
@@ -147,7 +147,7 @@ public class JuxeboxTests {
 		assertFalse(s.canPlay(song));
 
 		assertEquals("BRYCE", s.getName());
-		assertEquals(123, s.getNumberID());
+		assertEquals("123", s.getPassword());
 	}
 
 	/*
@@ -155,10 +155,10 @@ public class JuxeboxTests {
 	 */
 	@Test
 	public void testOneStudents() {
-		Student a = new Student("BRYCE", 123);
-		Student b = new Student("BRYCE", 321);
-		Student c = new Student("ALEX", 456);
-		Student d = new Student("Bob", 654);
+		Student a = new Student("BRYCE", "123");
+		Student b = new Student("BRYCE", "321");
+		Student c = new Student("ALEX", "456");
+		Student d = new Student("Bob", "654");
 
 		Students abcd = new Students();
 
@@ -166,18 +166,6 @@ public class JuxeboxTests {
 		abcd.addStudent(b);
 		abcd.addStudent(c);
 		abcd.addStudent(d);
-
-		assertTrue(abcd.contains(123));
-		assertTrue(abcd.contains(321));
-		assertTrue(abcd.contains(456));
-		assertTrue(abcd.contains(654));
-		assertFalse(abcd.contains(1234));
-
-		assertEquals(a, abcd.getStudentById(123));
-		assertEquals(b, abcd.getStudentById(321));
-		assertEquals(c, abcd.getStudentById(456));
-		assertEquals(d, abcd.getStudentById(654));
-		assertEquals(null, abcd.getStudentById(1243));
 	}
 
 	/*

@@ -6,7 +6,6 @@
 package view;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -140,6 +139,9 @@ public class JukeboxGUI extends JFrame {
 		this.setVisible(true);
 	}
 
+	/*
+	 * Up dates all current data for the currently logged in student.
+	 */
 	private void updateCurrentStudentData() {
 		if(jukebox.getLoggedIn() == true){
 			this.currentUserInfoArea.setText("User Name: "
@@ -147,7 +149,7 @@ public class JukeboxGUI extends JFrame {
 					+ jukebox.getCurrentStudent().getSecondsLeftInHMS() + "\n"
 					+ "Number of Plays Today: " + jukebox.getCurrentStudent().getPlaysToday());
 		}else{
-			this.currentUserInfoArea.setText("User Name: No User Currently"
+			this.currentUserInfoArea.setText("User Name: No User Currently Logged On"
 					+ "\n" + "Time left: "
 					+ "--:--:--" + "\n"
 					+ "Number of Plays Today: --");
@@ -178,6 +180,10 @@ public class JukeboxGUI extends JFrame {
 		}
 	}
 
+	/*
+	 * Listens for a logout attempt. Then clears fields and sets
+	 * current user to Null.
+	 */
 	private class logoutButtonListener implements ActionListener {
 
 		@Override
@@ -190,6 +196,7 @@ public class JukeboxGUI extends JFrame {
 			}
 		}
 	}
+	
 	/*
 	 * Listens for the current songs status. It then gets the tells
 	 * the user that information..

@@ -32,10 +32,10 @@ public class Jukebox {
 				"Untameable Fire", "Pierre Langer", 282));
 
 		students = new Students();
-		students.addStudent(new Student("Ali", 1111));
-		students.addStudent(new Student("Chris", 2222));
-		students.addStudent(new Student("River", 3333));
-		students.addStudent(new Student("Ryan", 4444));
+		students.addStudent(new Student("Ali", "1111"));
+		students.addStudent(new Student("Chris", "2222"));
+		students.addStudent(new Student("River", "3333"));
+		students.addStudent(new Student("Ryan", "4444"));
 		
 		loggedIn = false;
 		

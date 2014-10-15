@@ -29,18 +29,6 @@ public class Students {
 	public void addStudent(Student student) {
 		students.add(student);
 	}
-
-	/*
-	 * Does the list contain a unique ID.
-	 */
-	public boolean contains(long numberID) {
-		for (Student student : students) {
-			if (student.getNumberID() == numberID) {
-				return true;
-			}
-		}
-		return false;
-	}
 	
 	private boolean studentExists(String name){
 		for(Student student: students){
@@ -49,18 +37,6 @@ public class Students {
 			}
 		}
 		return false;
-	}
-	
-	/*
-	 * Return Student that has a passed in ID.
-	 */
-	public Student getStudentById(long numberID) {
-		for (Student student : students) {
-			if (student.getNumberID() == numberID) {
-				return student;
-			}
-		}
-		return null;
 	}
 	
 	public Student getStudentByName(String name){
@@ -78,11 +54,11 @@ public class Students {
 			return false;
 		}
 		Student currentStudent = getStudentByName(name);
-		long passKeyNumericalVersion = 0;
-		for(int i = 0; i < 4; i++){
-			passKeyNumericalVersion += Long.parseLong(""+ passkey[i]) * Math.pow(10, 3-i);
+		String passKeyNumericalVersion = "";
+		for(int i = 0; i < passkey.length ; i++){
+			passKeyNumericalVersion += passkey[i];
 		}
-		if(currentStudent.getNumberID() == passKeyNumericalVersion){
+		if(currentStudent.getPassword().equals(passKeyNumericalVersion)){
 			return true;
 		}else{
 			return false;
