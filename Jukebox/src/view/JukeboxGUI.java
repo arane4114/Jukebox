@@ -6,6 +6,7 @@
 package view;
 
 import java.awt.BorderLayout;
+
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -26,11 +27,8 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 import model.CurrentSongListener;
-import model.PlayList;
+import model.Jukebox;
 import model.Song;
-import model.Songs;
-import model.Student;
-import model.Students;
 
 /*
  * This class provides the GUI for our app.
@@ -45,46 +43,18 @@ public class JukeboxGUI extends JFrame {
 	private JTextArea currentUserInfoArea;
 	private JTextField userNameInputField;
 	private JPasswordField userPasswordField;
-
-	private Student currentStudent;
-	private PlayList playList;
-	private Songs songs;
-	private Students students;
+	
+	private Jukebox box;
 
 	/*
 	 * Constructs all GUI elements and creases instances of the model and links
 	 * the two together as needed.
 	 */
 	public JukeboxGUI() {
+		
+		box = new Jukebox();
 
-		String baseDir = System.getProperty("user.dir")
-				+ System.getProperty("file.separator") + "songfiles"
-				+ System.getProperty("file.separator");
-
-		playList = new PlayList();
-
-		songs = new Songs();
-		songs.addSong(new Song(baseDir + "BlueRidgeMountainMist.mp3",
-				"Blue Ridge Mountain Mist", "Ralph Schuckett", 38));
-		songs.addSong(new Song(baseDir + "DeterminedTumbao.mp3",
-				"Determined Tumbao", "FreePlay Music", 20));
-		songs.addSong(new Song(baseDir + "flute.aif", "Flute",
-				"Sun Microsystems", 5));
-		songs.addSong(new Song(baseDir + "spacemusic.au", "Spacemusic",
-				"Unknown", 6));
-		songs.addSong(new Song(baseDir + "SwingCheese.mp3", "Swing Cheese",
-				"FreePlay Music", 15));
-		songs.addSong(new Song(baseDir + "tada.wav", "Tada", "Microsoft", 2));
-		songs.addSong(new Song(baseDir + "UntameableFire.mp3",
-				"Untameable Fire", "Pierre Langer", 282));
-
-		students = new Students();
-		students.addStudent(new Student("Ali", 1111));
-		students.addStudent(new Student("Chris", 2222));
-		students.addStudent(new Student("River", 3333));
-		students.addStudent(new Student("Ryan", 4444));
-
-		table = new JTable(songs);
+		table = new JTable(box.getSongs());
 		table.setRowSorter(new TableRowSorter<TableModel>(table.getModel()));
 
 		play = new JButton("Play");
@@ -115,10 +85,10 @@ public class JukeboxGUI extends JFrame {
 		middlePanel.add(new JLabel("Now Playing:"));
 		currentSongLabel = new JLabel("No Song Playing");
 		middlePanel.add(currentSongLabel);
-		playList.addCurrentSongListener(new currentSongListener());
+		box.getPlayList().addCurrentSongListener(new currentSongListener());
 
 		middlePanel.add(new JLabel("Up Next:"));
-		JList<Song> playListJList = new JList<Song>(playList);
+		JList<Song> playListJList = new JList<Song>(box.getPlayList());
 		middlePanel.add(new JScrollPane(playListJList));
 
 		this.add(middlePanel);
@@ -152,9 +122,9 @@ public class JukeboxGUI extends JFrame {
 
 	private void updateCurrentStudentData() {
 		this.currentUserInfoArea.setText("User Name: "
-				+ currentStudent.getName() + "\n" + "Time left: "
-				+ currentStudent.getSecondsLeftInHMS() + "\n"
-				+ "Number of Plays Today: " + currentStudent.getPlaysToday());
+				+ box.getCurrentStudent().getName() + "\n" + "Time left: "
+				+ box.getCurrentStudent().getSecondsLeftInHMS() + "\n"
+				+ "Number of Plays Today: " + box.getCurrentStudent().getPlaysToday());
 	}
 
 	private class loginButtonListener implements ActionListener {
@@ -162,10 +132,10 @@ public class JukeboxGUI extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
-			if (students.login(userNameInputField.getText(),
+			if (box.getStudents().login(userNameInputField.getText(),
 					userPasswordField.getPassword())) {
-				currentStudent = students.getStudentByName(userNameInputField
-						.getText());
+				box.setCurrentStudent(box.getStudents().getStudentByName(userNameInputField
+						.getText()));
 				updateCurrentStudentData();
 			} else {
 				JOptionPane.showMessageDialog(new JFrame(),
@@ -203,11 +173,11 @@ public class JukeboxGUI extends JFrame {
 			int selectedColumn = table.getSelectedColumn();
 
 			if (selectedColumn != -1 && selectedRow != -1) {
-				if (songs.getSongAt(selectedRow).canBePlayedAgainToday()
-						&& currentStudent.canPlay(songs.getSongAt(selectedRow))) {
-					playList.addSong(songs.getSongAt(selectedRow));
-					songs.getSongAt(selectedRow).play();
-					currentStudent.play(songs.getSongAt(selectedRow));
+				if (box.getSongs().getSongAt(selectedRow).canBePlayedAgainToday()
+						&& box.getCurrentStudent().canPlay(box.getSongs().getSongAt(selectedRow))) {
+					box.getPlayList().addSong(box.getSongs().getSongAt(selectedRow));
+					box.getSongs().getSongAt(selectedRow).play();
+					box.getCurrentStudent().play(box.getSongs().getSongAt(selectedRow));
 					updateCurrentStudentData();
 				}
 			}
