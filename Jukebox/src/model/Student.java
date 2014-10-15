@@ -100,6 +100,13 @@ public class Student {
 	public int getPlaysToday() {
 		return playsToday;
 	}
+	
+	/*
+	 * Getter for plays left.
+	 */
+	public int getPlaysLeft(){
+		return 2 - playsToday;
+	}
 
 	/*
 	 * Increases play count by 1.

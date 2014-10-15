@@ -28,7 +28,7 @@ public class QueueAndPlay3SongsInOrder {
 		playlist.addSong(new Song(baseDir + "flute.aif", "Flute", "Sun Microsystems", 6));
 		playlist.addSong(new Song(baseDir + "spacemusic.au", "spacemusic", "Sun Microsystems" , 6));
 		playlist.addSong(new Song(baseDir + "tada.wav", "tada", "Sun Microsystems", 2));
-		
+
 	}
 	
 	/*

@@ -147,12 +147,14 @@ public class JukeboxGUI extends JFrame {
 			this.currentUserInfoArea.setText("User Name: "
 					+ jukebox.getCurrentStudent().getName() + "\n" + "Time left: "
 					+ jukebox.getCurrentStudent().getSecondsLeftInHMS() + "\n"
-					+ "Number of Plays Today: " + jukebox.getCurrentStudent().getPlaysToday());
+					+ "Number of Plays Today: " + jukebox.getCurrentStudent().getPlaysToday() + "\n"
+					+ "Number of Plays Left Today: " + jukebox.getCurrentStudent().getPlaysLeft());
 		}else{
 			this.currentUserInfoArea.setText("User Name: No User Currently Logged On"
 					+ "\n" + "Time left: "
 					+ "--:--:--" + "\n"
-					+ "Number of Plays Today: --");
+					+ "Number of Plays Today: --\n"
+					+ "Number of Plays Left Today: --");
 		}
 	}
 
