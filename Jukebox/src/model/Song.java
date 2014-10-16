@@ -4,6 +4,7 @@
  */
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -13,7 +14,7 @@ import java.util.List;
  * This class is the data item for the song. 
  * It stores all the data we need for the GUI elements to work in one place.
  */
-public class Song {
+public class Song implements Serializable{
 	private String fileLocation;
 	private String title;
 	private String artist;
@@ -154,6 +155,9 @@ public class Song {
 		}
 	}
 	
+	/*
+	 * Returns the title and artist of the song. 
+	 */
 	public String toString(){
 		return title + " by " + artist;
 	}

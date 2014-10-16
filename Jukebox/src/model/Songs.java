@@ -4,6 +4,7 @@
  */
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -15,15 +16,14 @@ import javax.swing.table.TableModel;
 /*
  * This is out collection class that forms the model that our GUI can read from.
  */
-public class Songs implements ListModel<Song>, TableModel {
+public class Songs implements ListModel<Song>, TableModel, Serializable {
 
 	private ArrayList<Song> songs;
-	private LinkedList<ListDataListener> listDataListeners;
-	private LinkedList<TableModelListener> tableModelListeners;
+	private transient LinkedList<ListDataListener> listDataListeners;
+	private transient LinkedList<TableModelListener> tableModelListeners;
 
 	/*
-	 * Songs constructor.
-	 * Takes no arguments.
+	 * Songs constructor. Takes no arguments.
 	 */
 	public Songs() {
 		songs = new ArrayList<Song>();
@@ -39,7 +39,7 @@ public class Songs implements ListModel<Song>, TableModel {
 	}
 
 	/*
-	 * Adds table listeners. 
+	 * Adds table listeners.
 	 */
 	@Override
 	public void addTableModelListener(TableModelListener arg0) {
@@ -86,8 +86,7 @@ public class Songs implements ListModel<Song>, TableModel {
 	}
 
 	/*
-	 * Returns the number of Rows.
-	 * Number of rows = size of songs.
+	 * Returns the number of Rows. Number of rows = size of songs.
 	 */
 	@Override
 	public int getRowCount() {
@@ -111,7 +110,7 @@ public class Songs implements ListModel<Song>, TableModel {
 	}
 
 	/*
-	 * Gets song that row represents. 
+	 * Gets song that row represents.
 	 */
 	public Song getSongAt(int rowIndex) {
 		return songs.get(rowIndex);
@@ -134,7 +133,7 @@ public class Songs implements ListModel<Song>, TableModel {
 	}
 
 	/*
-	 * No setting values. 
+	 * No setting values.
 	 */
 	@Override
 	public void setValueAt(Object arg0, int arg1, int arg2) {
@@ -176,5 +175,14 @@ public class Songs implements ListModel<Song>, TableModel {
 	public void removeListDataListener(ListDataListener l) {
 		listDataListeners.remove(l);
 
+	}
+
+	/*
+	 * As the lists below cant be serialized, when reloading from a disk they
+	 * need to be manually reset. The UI will add themselves as needed.
+	 */
+	public void wasLoadedFromFile() {
+		listDataListeners = new LinkedList<ListDataListener>();
+		tableModelListeners = new LinkedList<TableModelListener>();
 	}
 }

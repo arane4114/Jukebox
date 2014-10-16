@@ -4,6 +4,7 @@
  */
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -12,14 +13,15 @@ import java.util.concurrent.TimeUnit;
 
 /*
  * This class stores all the data for a student. 
- * As the spec changed, it isn't used much in this iteration.
+ * It can tell if s student can play a particular song.
  */
-public class Student {
+public class Student implements Serializable {
 
 	private String password;
 	private String name;
 	private int secondsPlayed;
 	private int playsToday;
+	private PlayBackDeniedReason playBackDeniedReason;
 
 	private final int MAX_PLAY_TIME = 90000;
 	private final int MAX_PLAYS = 2;
@@ -66,7 +68,7 @@ public class Student {
 	}
 
 	/*
-	 * referneced from
+	 * Convers seconds to Hours:Minutes:Seconds referneced from
 	 * http://stackoverflow.com/questions/11357945/java-convert-seconds
 	 * -into-day-hour-minute-and-seconds-using-timeunit
 	 */
@@ -78,17 +80,16 @@ public class Student {
 		long second = TimeUnit.SECONDS.toSeconds(seconds)
 				- (TimeUnit.SECONDS.toMinutes(seconds) * 60);
 		String minuteString;
-		if(minute < 10){
-			minuteString = "0"+minute;
-		}
-		else{
+		if (minute < 10) {
+			minuteString = "0" + minute;
+		} else {
 			minuteString = Long.toString(minute);
-;		}
-		String secondString;
-		if(second < 10){
-			secondString = "0" + Long.toString(second);
+			;
 		}
-		else{
+		String secondString;
+		if (second < 10) {
+			secondString = "0" + Long.toString(second);
+		} else {
 			secondString = Long.toString(second);
 		}
 		return hours + ":" + minuteString + ":" + secondString;
@@ -100,11 +101,11 @@ public class Student {
 	public int getPlaysToday() {
 		return playsToday;
 	}
-	
+
 	/*
 	 * Getter for plays left.
 	 */
-	public int getPlaysLeft(){
+	public int getPlaysLeft() {
 		return 2 - playsToday;
 	}
 
@@ -117,11 +118,21 @@ public class Student {
 
 	/*
 	 * Returns a boolean. If the another song can be played or not by that
-	 * student.
+	 * student. If the song cant be played, it sets the playBackDeniedReason to
+	 * the right reason, but will return false. Another call to student is
+	 * needed to determine the casue of the playback denial.
 	 */
 	public boolean canPlay(Song song) {
 		dateCheck();
-		return playsToday < MAX_PLAYS && getSecondsLeft() >= song.getLength();
+		if (playsToday >= MAX_PLAYS) {
+			this.playBackDeniedReason = PlayBackDeniedReason.MAX_DAILY_PLAYS_REACHED;
+			return false;
+		} else if (getSecondsLeft() < song.getLength()) {
+			this.playBackDeniedReason = PlayBackDeniedReason.INSUFFICEIENT_TIME;
+			return false;
+		} else {
+			return true;
+		}
 	}
 
 	/*
@@ -183,5 +194,14 @@ public class Student {
 		for (int i = 1; i < dayPlays.size(); i++) {
 			dayPlays.get(dayPlays.size() - i).add(Calendar.DATE, -1);
 		}
+	}
+
+	/*
+	 * Returns the reason why a song wasnt played. As there are more than two
+	 * possible things that can happen when this class is asked to play a song,
+	 * another method is needed to determine failure reasons.
+	 */
+	public PlayBackDeniedReason getplayBackDeniedReason() {
+		return this.playBackDeniedReason;
 	}
 }
